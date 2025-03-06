@@ -18,7 +18,7 @@ import { enterOutline, logoGoogle } from "ionicons/icons";
 
 import "./Login.css";
 
-const Login: React.FC = () => {
+const LoginPage: React.FC = () => {
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonButton expand="block">
+        <IonButton expand="block" routerLink="/home/tab1">
           Login
           <IonIcon slot="end" icon={enterOutline}></IonIcon>
         </IonButton>
@@ -98,4 +98,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

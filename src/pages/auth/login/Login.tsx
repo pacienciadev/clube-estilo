@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   IonButton,
   IonCheckbox,
@@ -19,6 +21,9 @@ import { enterOutline, logoGoogle } from "ionicons/icons";
 import "./Login.css";
 
 const LoginPage: React.FC = () => {
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -53,9 +58,11 @@ const LoginPage: React.FC = () => {
         <IonList>
           <IonItem>
             <IonInput
+              type="email"
               label="E-mail"
               placeholder="seu@email.com"
               clearInput={true}
+              onIonChange={(e) => setUser(e.detail.value!)}
             ></IonInput>
           </IonItem>
 
@@ -65,6 +72,7 @@ const LoginPage: React.FC = () => {
               label="Senha"
               placeholder="digite sua senha"
               clearInput={true}
+              onIonChange={(e) => setPassword(e.detail.value!)}
             >
               <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
             </IonInput>
@@ -90,7 +98,7 @@ const LoginPage: React.FC = () => {
           Esqueceu a senha?
         </IonButton>
 
-        <IonButton fill="clear" expand="block" routerLink="/signup">
+        <IonButton fill="clear" expand="block" routerLink="/register">
           Criar nova conta
         </IonButton>
       </IonContent>

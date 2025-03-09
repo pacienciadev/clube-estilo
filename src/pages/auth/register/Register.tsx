@@ -1,21 +1,22 @@
 import { useState } from "react";
 
 import {
+  IonBackButton,
   IonButton,
-  IonCheckbox,
+  IonButtons,
   IonCol,
   IonContent,
   IonGrid,
-  IonIcon,
+  IonHeader,
   IonInput,
   IonInputPasswordToggle,
   IonItem,
   IonList,
   IonPage,
   IonRow,
+  IonTitle,
+  IonToolbar,
 } from "@ionic/react";
-
-import { arrowBackOutline, personAddOutline } from "ionicons/icons";
 
 import "./Register.css";
 
@@ -52,6 +53,16 @@ const RegisterPage: React.FC = () => {
 
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton></IonBackButton>
+          </IonButtons>
+
+          <IonTitle>Nova conta</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent className="ion-padding">
         <IonGrid className="login-title">
           <IonRow>
@@ -106,15 +117,9 @@ const RegisterPage: React.FC = () => {
           onClick={() => createUserHandle(user, password)}
         >
           Criar conta
-          <IonIcon slot="end" icon={personAddOutline}></IonIcon>
         </IonButton>
 
         <IonCol class="ion-padding"></IonCol>
-
-        <IonButton fill="clear" expand="block" routerLink="/">
-          <IonIcon slot="start" icon={arrowBackOutline}></IonIcon>
-          Voltar
-        </IonButton>
       </IonContent>
     </IonPage>
   );

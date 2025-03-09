@@ -1,29 +1,20 @@
-import { useState } from "react";
-
 import {
   IonButton,
-  IonCheckbox,
   IonCol,
   IonContent,
   IonGrid,
   IonIcon,
-  IonInput,
-  IonInputPasswordToggle,
-  IonItem,
   IonList,
   IonPage,
   IonRow,
   IonText,
 } from "@ionic/react";
 
-import { enterOutline, logoGoogle } from "ionicons/icons";
+import { lockClosed, logoGoogle, personCircle } from "ionicons/icons";
 
 import "./Login.css";
 
 const LoginPage: React.FC = () => {
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-
   return (
     <IonPage>
       <IonContent className="ion-padding">
@@ -39,68 +30,35 @@ const LoginPage: React.FC = () => {
 
         <IonList className="login-form">
           <IonButton expand="block" color="danger">
-            <IonIcon
-              slot="start"
-              icon={logoGoogle}
-              className="ion-padding-horizontal"
-            ></IonIcon>
+            <IonIcon slot="start" icon={logoGoogle}></IonIcon>
 
             <IonText>Entrar com o Google</IonText>
           </IonButton>
+
+          <IonCol class="ion-padding"></IonCol>
+
+          <IonButton expand="block" routerLink="/login-with-password">
+            <IonIcon
+              slot="start"
+              icon={lockClosed}
+              className="ion-align-self-start"
+            ></IonIcon>
+
+            <IonText>Entrar com o E-mail e Senha</IonText>
+          </IonButton>
+
+          <IonCol class="ion-padding"></IonCol>
+
+          <IonButton fill="clear" expand="block" routerLink="/register">
+            <IonIcon
+              slot="start"
+              icon={personCircle}
+              className="ion-align-self-start"
+            ></IonIcon>
+
+            <IonText>Criar nova conta</IonText>
+          </IonButton>
         </IonList>
-
-        <IonGrid>
-          <IonRow className="ion-padding ion-justify-content-center">
-            <h5>Ou se preferir...</h5>
-          </IonRow>
-        </IonGrid>
-
-        <IonList>
-          <IonItem>
-            <IonInput
-              type="email"
-              label="E-mail"
-              placeholder="seu@email.com"
-              clearInput={true}
-              onIonChange={(e) => setUser(e.detail.value!)}
-            ></IonInput>
-          </IonItem>
-
-          <IonItem>
-            <IonInput
-              type="password"
-              label="Senha"
-              placeholder="digite sua senha"
-              clearInput={true}
-              onIonChange={(e) => setPassword(e.detail.value!)}
-            >
-              <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-            </IonInput>
-          </IonItem>
-        </IonList>
-
-        <IonGrid className="ion-padding-vertical">
-          <IonRow class="ion-justify-content-between">
-            <IonCol>
-              <IonCheckbox labelPlacement="end">Lembre de mim</IonCheckbox>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-
-        <IonButton expand="block" routerLink="/home/tab1">
-          Login
-          <IonIcon slot="end" icon={enterOutline}></IonIcon>
-        </IonButton>
-
-        <IonCol class="ion-padding"></IonCol>
-
-        <IonButton fill="clear" expand="block" routerLink="/forgot-password">
-          Esqueceu a senha?
-        </IonButton>
-
-        <IonButton fill="clear" expand="block" routerLink="/register">
-          Criar nova conta
-        </IonButton>
       </IonContent>
     </IonPage>
   );

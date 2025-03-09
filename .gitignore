@@ -34,3 +34,4 @@ dataconnect
 default-connector
 *-debug.log
 .firebase
+.env

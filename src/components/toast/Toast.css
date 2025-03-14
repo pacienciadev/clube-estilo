@@ -1,0 +1,14 @@
+ion-toast.custom-toast {
+  --background: #3f3fe3;
+  --color: #4b4a50;
+}
+
+ion-toast.custom-toast.alert {
+  --background: var(--ion-color-danger);
+  --color: var(--ion-color-danger-contrast);
+}
+
+ion-toast.custom-toast.success {
+  --background: var(--ion-color-success);
+  --color: var(--ion-color-success-contrast);
+}

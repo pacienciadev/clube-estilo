@@ -18,11 +18,13 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import "./Register.css";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from "../../../services/fb.config";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { AuthLogoComponent } from "../components/auth-logo";
+
+import "./Register.css";
 
 const RegisterPage: React.FC = () => {
   const [user, setUser] = useState("");
@@ -65,6 +67,8 @@ const RegisterPage: React.FC = () => {
 
       <IonContent className="ion-padding">
         <IonGrid className="login-title">
+          <AuthLogoComponent />
+
           <IonRow>
             <h1>Vamos criar seu registro...</h1>
           </IonRow>

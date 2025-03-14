@@ -12,6 +12,8 @@ import {
 
 import { lockClosed, logoGoogle, personCircle } from "ionicons/icons";
 
+import { AuthLogoComponent } from "../components/auth-logo";
+
 import "./Login.css";
 
 const LoginPage: React.FC = () => {
@@ -19,11 +21,13 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonContent className="ion-padding">
         <IonGrid className="login-title">
-          <IonRow>
+          <AuthLogoComponent />
+
+          <IonRow className="ion-justify-content-center">
             <h1>Quem bom te ter por aqui!</h1>
           </IonRow>
 
-          <IonRow>
+          <IonRow className="ion-justify-content-center">
             <p>Acesse sua conta para usar o app.</p>
           </IonRow>
         </IonGrid>

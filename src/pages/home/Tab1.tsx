@@ -6,10 +6,23 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import ExploreContainer from "../../components/ExploreContainer";
+
+import { signOut } from "firebase/auth";
+
+import { auth } from "../../services";
+
 import "./Tab1.css";
 
 const Tab1: React.FC = () => {
+  const logoutHandler = () =>
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+
   return (
     <IonPage>
       <IonHeader>
@@ -25,9 +38,9 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonButton>Press here</IonButton>
-
-        <ExploreContainer name="page" />
+        <IonButton expand="block" onClick={logoutHandler}>
+          Logout
+        </IonButton>
       </IonContent>
     </IonPage>
   );

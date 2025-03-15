@@ -14,14 +14,19 @@ import {
   IonInputPasswordToggle,
   IonPage,
   IonRow,
+  IonSpinner,
+  IonText,
   IonTitle,
   IonToolbar,
-  useIonRouter,
 } from "@ionic/react";
 
-import { enterOutline } from "ionicons/icons";
+import { enterOutline, personCircle } from "ionicons/icons";
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { auth } from "../../../services";
+
+import { validateRegexEmail } from "../../../utils";
 
 import { ToastComponent } from "../../../components/toast";
 
@@ -45,17 +50,13 @@ const LoginWithPasswordPage: React.FC = () => {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     if (isValidEmail && isValidPassword) return setIsDisabled(false);
 
     setIsDisabled(true);
   }, [isValidEmail, isValidPassword]);
-
-  const validateRegexEmail = (email: string) => {
-    return email.match(
-      /^(?=.{1,254}$)(?=.{1,64}@)[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-    );
-  };
 
   const validateEmail = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
@@ -91,34 +92,17 @@ const LoginWithPasswordPage: React.FC = () => {
     setIsValidPassword(false);
   };
 
-  const auth = getAuth();
-  const router = useIonRouter();
-
   const loginHandler = () => {
-    console.clear();
-    console.log("Login com senha", email, password);
+    setIsLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(
-          "%c | .then | userCredential.user:",
-          "background: black; color: lime",
-          userCredential.user
-        );
-
-        router.push("/home/tab1", "forward", "replace");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        console.log(
-          "%c | loginHandler | errorCode:",
-          "background: black; color: lime",
-          errorCode
-        );
-
+      .catch(() => {
         setIsToastOpened(true);
         setToastMessage("Usuário ou senha inválidos");
         setToastType("alert");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -185,15 +169,37 @@ const LoginWithPasswordPage: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonButton expand="block" disabled={isDisabled} onClick={loginHandler}>
-          Login
-          <IonIcon slot="end" icon={enterOutline}></IonIcon>
-        </IonButton>
+        {!isLoading ? (
+          <IonButton
+            expand="block"
+            disabled={isDisabled}
+            onClick={loginHandler}
+          >
+            Login
+            <IonIcon slot="end" icon={enterOutline}></IonIcon>
+          </IonButton>
+        ) : (
+          <IonButton expand="block" disabled={true}>
+            <IonSpinner name="dots"></IonSpinner>
+          </IonButton>
+        )}
 
         <IonCol class="ion-padding"></IonCol>
 
         <IonButton fill="clear" expand="block" routerLink="/forgot-password">
-          Esqueceu a senha?
+          <IonText>Esqueceu a senha?</IonText>
+        </IonButton>
+
+        <IonCol class="ion-padding"></IonCol>
+
+        <IonButton fill="clear" expand="block" routerLink="/register">
+          <IonIcon
+            slot="start"
+            icon={personCircle}
+            className="ion-align-self-start"
+          ></IonIcon>
+
+          <IonText>Criar nova conta</IonText>
         </IonButton>
 
         <ToastComponent

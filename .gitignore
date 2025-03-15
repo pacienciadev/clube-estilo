@@ -35,3 +35,4 @@ default-connector
 *-debug.log
 .firebase
 .env
+exportedData

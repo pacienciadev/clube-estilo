@@ -1,61 +1,157 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonCol,
   IonContent,
   IonGrid,
   IonHeader,
   IonInput,
   IonInputPasswordToggle,
-  IonItem,
   IonList,
   IonPage,
   IonRow,
+  IonSpinner,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-import { auth } from "../../../services/fb.config";
+import { auth } from "../../../services";
+
+import { validateRegexEmail } from "../../../utils";
+
+import { ToastComponent } from "../../../components/toast";
 
 import { AuthLogoComponent } from "../components/auth-logo";
 
 import "./Register.css";
 
 const RegisterPage: React.FC = () => {
-  const [user, setUser] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isToastOpened, setIsToastOpened] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"alert" | "success">("alert");
 
-  const createUserHandle = (user: string, password: string) =>
-    createUserWithEmailAndPassword(auth, user, password)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isEmailTouched, setIsEmailTouched] = useState(false);
+  const [isPasswordTouched, setIsPasswordTouched] = useState(false);
+  const [isConfirmPasswordTouched, setIsConfirmPasswordTouched] =
+    useState(false);
+
+  const [isValidEmail, setIsValidEmail] = useState<boolean>();
+  const [isValidPassword, setIsValidPassword] = useState<boolean>();
+  const [isValidConfirmPassword, setIsValidConfirmPassword] =
+    useState<boolean>();
+
+  const [confirmPasswordErrorText, setConfirmPasswordErrorText] = useState("");
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isValidEmail && isValidPassword && isValidConfirmPassword)
+      return setIsDisabled(false);
+
+    setIsDisabled(true);
+  }, [isValidEmail, isValidPassword, isValidConfirmPassword]);
+
+  const validateEmail = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+
+    setIsValidEmail(undefined);
+
+    if (value === "") return;
+
+    if (validateRegexEmail(value) !== null) {
+      setIsValidEmail(true);
+      setEmail(value);
+
+      return;
+    }
+
+    setIsValidEmail(false);
+  };
+
+  const validatePassword = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+
+    setIsValidPassword(undefined);
+
+    if (value === "") return;
+
+    if (value.length >= 6) {
+      setPassword(value);
+      setIsValidPassword(true);
+
+      return;
+    }
+
+    setIsValidPassword(false);
+  };
+
+  const validateConfirmPassword = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+
+    setIsValidConfirmPassword(undefined);
+
+    if (value === "" && !isConfirmPasswordTouched) return;
+
+    if (value === "" && isConfirmPasswordTouched)
+      return setConfirmPasswordErrorText(
+        "O campo de confirmação de senha não pode estar vazio"
+      );
+
+    if (value === password) {
+      setIsValidConfirmPassword(true);
+
+      return;
+    }
+
+    setConfirmPasswordErrorText("As senhas não coincidem");
+
+    setIsValidConfirmPassword(false);
+  };
+
+  const createUserHandler = () => {
+    setIsLoading(true);
+
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log(
           "%c | .then | userCredential.user:",
           "background: black; color: lime",
           userCredential.user
         );
+
+        setIsToastOpened(true);
+        setToastMessage("Usuário criado com sucesso!");
+        setToastType("success");
       })
       .catch((error) => {
+        const errorCode = error.code;
         console.log(
-          "%c | useEffect | error.code:",
+          "%c | loginHandler | errorCode:",
           "background: black; color: lime",
-          error.code
+          errorCode
         );
-        console.log(
-          "%c | useEffect | error.message:",
-          "background: black; color: lime",
-          error.message
-        );
+
+        setIsToastOpened(true);
+        setToastMessage("Usuário ou senha inválidos");
+        setToastType("alert");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
+  };
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader id="header">
         <IonToolbar>
           <IonButtons slot="start">
             <IonBackButton></IonBackButton>
@@ -79,51 +175,78 @@ const RegisterPage: React.FC = () => {
         </IonGrid>
 
         <IonList>
-          <IonItem>
-            <IonInput
-              type="email"
-              label="E-mail"
-              placeholder="seu@email.com"
-              clearInput={true}
-              onIonChange={(e) => setUser(e.detail.value!)}
-            ></IonInput>
-          </IonItem>
+          <IonInput
+            className={`
+                ${isValidEmail && "ion-valid"} 
+                ${!isValidEmail && "ion-invalid"} 
+                ${isEmailTouched && "ion-touched"}
+              `}
+            type="email"
+            label="E-mail"
+            placeholder="seu@email.com"
+            errorText="O email é inválido"
+            clearInput={true}
+            onIonInput={(event) => validateEmail(event)}
+            onIonBlur={() => setIsEmailTouched(true)}
+          ></IonInput>
 
-          <IonItem>
-            <IonInput
-              type="password"
-              label="Senha"
-              placeholder="digite sua senha"
-              clearInput={true}
-              onIonChange={(e) => setPassword(e.detail.value!)}
-            >
-              <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-            </IonInput>
-          </IonItem>
+          <IonInput
+            className={`
+                ${isValidPassword && "ion-valid"} 
+                ${!isValidPassword && "ion-invalid"} 
+                ${isPasswordTouched && "ion-touched"}
+              `}
+            type="password"
+            label="Senha"
+            placeholder="digite sua senha"
+            errorText="A senha é inválida"
+            clearInput={true}
+            onIonInput={(event) => validatePassword(event)}
+            onIonBlur={() => setIsPasswordTouched(true)}
+          >
+            <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+          </IonInput>
 
-          <IonItem>
-            <IonInput
-              type="password"
-              label="Confirmar Senha"
-              placeholder="confirme sua senha"
-              clearInput={true}
-              onIonChange={(e) => setConfirmPassword(e.detail.value!)}
-            >
-              <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
-            </IonInput>
-          </IonItem>
+          <IonInput
+            className={`
+                ${isValidConfirmPassword && "ion-valid"} 
+                ${!isValidConfirmPassword && "ion-invalid"} 
+                ${isConfirmPasswordTouched && "ion-touched"}
+              `}
+            type="password"
+            label="Confirmar Senha"
+            placeholder="confirme sua senha"
+            errorText={confirmPasswordErrorText}
+            clearInput={true}
+            onIonInput={(event) => validateConfirmPassword(event)}
+            onIonBlur={() => setIsConfirmPasswordTouched(true)}
+          >
+            <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+          </IonInput>
         </IonList>
 
         <IonGrid className="ion-padding-vertical"></IonGrid>
 
-        <IonButton
-          expand="block"
-          onClick={() => createUserHandle(user, password)}
-        >
-          Criar conta
-        </IonButton>
+        {!isLoading ? (
+          <IonButton
+            expand="block"
+            disabled={isDisabled}
+            onClick={createUserHandler}
+          >
+            Criar conta
+          </IonButton>
+        ) : (
+          <IonButton expand="block" disabled={true}>
+            <IonSpinner name="dots"></IonSpinner>
+          </IonButton>
+        )}
 
-        <IonCol class="ion-padding"></IonCol>
+        <ToastComponent
+          isOpen={isToastOpened}
+          onClose={setIsToastOpened}
+          message={toastMessage}
+          type={toastType}
+        />
       </IonContent>
     </IonPage>
   );

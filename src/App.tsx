@@ -1,6 +1,4 @@
-import { Redirect, Route } from "react-router-dom";
-import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import { IonApp, setupIonicReact } from "@ionic/react";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -32,27 +30,13 @@ import "@ionic/react/css/palettes/dark.system.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { LoginPage } from "./pages/auth/login";
-import { HomePage } from "./pages/home";
-import { RegisterPage } from "./pages/auth/register";
-import { LoginWithPasswordPage } from "./pages/auth/login-with-password";
+import { Routes } from "./routes";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/login-with-password" component={LoginWithPasswordPage} />
-        <Route path="/register" component={RegisterPage} />
-        <Route path="/home" component={HomePage} />
-
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
+    <Routes />
   </IonApp>
 );
 

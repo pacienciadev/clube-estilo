@@ -15,6 +15,12 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
+console.log(
+  "%c | firebaseConfig:",
+  "background: black; color: lime",
+  firebaseConfig
+);
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const analytics = getAnalytics(app);

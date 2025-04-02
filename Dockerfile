@@ -20,7 +20,7 @@ RUN npm run build
 RUN npm install -g serve
 
 # Expõe a porta em que o aplicativo será executado
-EXPOSE 5000
+EXPOSE 8080
 
 # Define o comando para iniciar o aplicativo
 CMD ["serve", "-s", "dist", "-l", "5000"]

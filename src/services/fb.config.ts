@@ -16,6 +16,12 @@ const firebaseConfig = {
 };
 
 console.log(
+  "%c | PROD:",
+  "background: black; color: red",
+  import.meta.env.VITE_PRODUCTION
+);
+
+console.log(
   "%c | firebaseConfig:",
   "background: black; color: lime",
   firebaseConfig
@@ -28,4 +34,6 @@ export const analytics = getAnalytics(app);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 
-connectAuthEmulator(auth, "http://127.0.0.1:9099");
+if (import.meta.env.VITE_PRODUCTION === "false") {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+}

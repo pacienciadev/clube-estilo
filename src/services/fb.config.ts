@@ -15,17 +15,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
-console.log(
-  "%c | PROD:",
-  "background: black; color: red",
-  import.meta.env.VITE_PRODUCTION
-);
-
-console.log(
-  "%c | firebaseConfig:",
-  "background: black; color: lime",
-  firebaseConfig
-);
+console.log("%c | PROD:", "background: black; color: red", import.meta.env);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -34,6 +24,6 @@ export const analytics = getAnalytics(app);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 
-if (import.meta.env.VITE_PRODUCTION === "false") {
+if (!import.meta.env.PROD) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
 }

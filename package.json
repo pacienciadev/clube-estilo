@@ -11,7 +11,7 @@
     "test.unit": "vitest",
     "lint": "eslint",
     "docker-build": "docker build -t clube-estilo .",
-    "docker-run": "docker run -p 5000:5000 clube-estilo"
+    "docker-run": "docker run -p 8080:8080 clube-estilo"
   },
   "dependencies": {
     "@capacitor/app": "7.0.0",

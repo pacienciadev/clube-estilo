@@ -34,7 +34,5 @@ dataconnect
 dataconnect-*
 default-connector
 *-debug.log
-.firebase
 .env
 exportedData
-firebase-export-*

@@ -7,22 +7,9 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { signOut } from "firebase/auth";
-
-import { auth } from "../../services";
-
 import "./Tab1.css";
 
 const Tab1: React.FC = () => {
-  const logoutHandler = () =>
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-      })
-      .catch((error) => {
-        // An error happened.
-      });
-
   return (
     <IonPage>
       <IonHeader>

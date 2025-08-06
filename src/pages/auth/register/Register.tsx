@@ -17,10 +17,6 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-
-import { auth } from "../../../services";
-
 import { validateRegexEmail } from "../../../utils";
 
 import { ToastComponent } from "../../../components/toast";
@@ -119,34 +115,6 @@ const RegisterPage: React.FC = () => {
 
   const createUserHandler = () => {
     setIsLoading(true);
-
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(
-          "%c | .then | userCredential.user:",
-          "background: black; color: lime",
-          userCredential.user
-        );
-
-        setIsToastOpened(true);
-        setToastMessage("Usuário criado com sucesso!");
-        setToastType("success");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        console.log(
-          "%c | loginHandler | errorCode:",
-          "background: black; color: lime",
-          errorCode
-        );
-
-        setIsToastOpened(true);
-        setToastMessage("Usuário ou senha inválidos");
-        setToastType("alert");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
   };
 
   return (

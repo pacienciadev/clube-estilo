@@ -22,8 +22,6 @@ import {
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 import { auth } from "../../../services";
 
 import { validateRegexEmail } from "../../../utils";
@@ -95,15 +93,6 @@ const LoginWithPasswordPage: React.FC = () => {
   const loginHandler = () => {
     setIsLoading(true);
 
-    signInWithEmailAndPassword(auth, email, password)
-      .catch(() => {
-        setIsToastOpened(true);
-        setToastMessage("Usuário ou senha inválidos");
-        setToastType("alert");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
   };
 
   return (

@@ -22,8 +22,6 @@ import {
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { auth } from "../../../services";
-
 import { validateRegexEmail } from "../../../utils";
 
 import { ToastComponent } from "../../../components/toast";

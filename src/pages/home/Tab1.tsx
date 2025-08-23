@@ -10,6 +10,10 @@ import {
 import "./Tab1.css";
 
 const Tab1: React.FC = () => {
+  const logoutHandler = () => {
+    console.log("User logged out");
+  };
+  
   return (
     <IonPage>
       <IonHeader>

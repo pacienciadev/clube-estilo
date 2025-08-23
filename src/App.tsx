@@ -30,13 +30,19 @@ import "@ionic/react/css/palettes/dark.system.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { Routes } from "./routes";
+import { IonReactRouter } from "@ionic/react-router"; 
+import { AppRoutes } from "./routes";
+import { AuthProvider } from "./contexts/AuthContext";
 
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-    <Routes />
+    <IonReactRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </IonReactRouter>
   </IonApp>
 );
 

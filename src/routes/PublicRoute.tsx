@@ -1,17 +1,18 @@
+import React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface PublicRouteProps extends RouteProps {
   component: React.ComponentType<object>;
-  restricted: boolean;
+  restricted?: boolean;
 }
 
-export const PublicRoute = ({
+export const PublicRoute: React.FC<PublicRouteProps> = ({
   component: Component,
-  restricted,
+  restricted = false,
   ...rest
-}: PublicRouteProps) => {
-  const loggedIn = false;
-  const isLoading = false;
+}) => {
+  const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return <div>Carregando...</div>;
@@ -21,8 +22,8 @@ export const PublicRoute = ({
     <Route
       {...rest}
       render={(props) =>
-        loggedIn && restricted ? (
-          <Redirect to="/home/tab1" />
+        isAuthenticated && restricted ? (
+          <Redirect to="/home" />
         ) : (
           <Component {...props} />
         )

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface PrivateRouteProps extends RouteProps {
   component: React.ComponentType<object>;
@@ -9,8 +10,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const loggedIn = false
-  const isLoading = false
+  const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return <div>Carregando...</div>;
@@ -20,7 +20,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
     <Route
       {...rest}
       render={(props) =>
-        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

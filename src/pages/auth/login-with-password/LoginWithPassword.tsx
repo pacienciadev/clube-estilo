@@ -18,15 +18,16 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
+  useIonRouter,
 } from "@ionic/react";
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { validateRegexEmail } from "../../../utils";
-
-import { ToastComponent } from "../../../components/toast";
-
 import { AuthLogoComponent } from "../components/auth-logo";
+
+import { validateEmail, validatePassword } from "../../../utils";
+import { ToastComponent } from "../../../components/toast";
+import { authService } from "../../../services/auth/auth.service";
 
 import "./LoginWithPassword.css";
 
@@ -44,6 +45,8 @@ const LoginWithPasswordPage: React.FC = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>();
   const [isValidPassword, setIsValidPassword] = useState<boolean>();
 
+  const [isRememberMeChecked, setIsRememberMeChecked] = useState<boolean>();
+
   const [isDisabled, setIsDisabled] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -54,43 +57,54 @@ const LoginWithPasswordPage: React.FC = () => {
     setIsDisabled(true);
   }, [isValidEmail, isValidPassword]);
 
-  const validateEmail = (event: Event) => {
-    const value = (event.target as HTMLInputElement).value;
+  const validateEmailHandler = (event: Event) => {
+    setIsValidEmail(validateEmail(event));
 
-    setIsValidEmail(undefined);
+    if (isValidEmail) {
+      const value = (event.target as HTMLInputElement).value;
 
-    if (value === "") return;
-
-    if (validateRegexEmail(value) !== null) {
-      setIsValidEmail(true);
       setEmail(value);
-
-      return;
     }
-
-    setIsValidEmail(false);
   };
 
-  const validatePassword = (event: Event) => {
-    const value = (event.target as HTMLInputElement).value;
+  const validatePasswordHandler = (event: Event) => {
+    setIsValidPassword(validatePassword(event));
 
-    setIsValidPassword(undefined);
+    if (isValidPassword) {
+      const value = (event.target as HTMLInputElement).value;
 
-    if (value === "") return;
-
-    if (value.length >= 6) {
       setPassword(value);
-      setIsValidPassword(true);
-
-      return;
     }
-
-    setIsValidPassword(false);
   };
+
+  const router = useIonRouter();
 
   const loginHandler = () => {
     setIsLoading(true);
 
+    authService
+      .login({ email, password })
+      .then((res) => {
+        const { access_token: accessToken } = res;
+
+        if (isRememberMeChecked) {
+          localStorage.setItem("access_token", accessToken);
+        } else {
+          sessionStorage.setItem("access_token", accessToken);
+        }
+
+        router.push("/home", "root", "replace");
+      })
+      .catch((error) => {
+        const { message } = error.response?.data || error;
+
+        setToastMessage(message);
+        setToastType("alert");
+        setIsToastOpened(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -126,7 +140,7 @@ const LoginWithPasswordPage: React.FC = () => {
             placeholder="seu@email.com"
             errorText="O email é inválido"
             clearInput={true}
-            onIonInput={(event) => validateEmail(event)}
+            onIonInput={(event) => validateEmailHandler(event)}
             onIonBlur={() => setIsEmailTouched(true)}
           ></IonInput>
 
@@ -141,7 +155,7 @@ const LoginWithPasswordPage: React.FC = () => {
             placeholder="digite sua senha"
             errorText="A senha é inválida"
             clearInput={true}
-            onIonInput={(event) => validatePassword(event)}
+            onIonInput={(event) => validatePasswordHandler(event)}
             onIonBlur={() => setIsPasswordTouched(true)}
           >
             <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
@@ -151,7 +165,13 @@ const LoginWithPasswordPage: React.FC = () => {
         <IonGrid className="ion-padding-vertical">
           <IonRow class="ion-justify-content-between">
             <IonCol>
-              <IonCheckbox labelPlacement="end">Lembre de mim</IonCheckbox>
+              <IonCheckbox
+                labelPlacement="end"
+                checked={isRememberMeChecked}
+                onIonChange={(e) => setIsRememberMeChecked(e.detail.checked)}
+              >
+                Lembre de mim - {isRememberMeChecked ? "Ativado" : "Desativado"}
+              </IonCheckbox>
             </IonCol>
           </IonRow>
         </IonGrid>

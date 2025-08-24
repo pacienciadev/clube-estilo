@@ -18,7 +18,6 @@ import {
   IonText,
   IonTitle,
   IonToolbar,
-  useIonRouter,
 } from "@ionic/react";
 
 import { enterOutline, personCircle } from "ionicons/icons";
@@ -30,6 +29,7 @@ import { ToastComponent } from "../../../components/toast";
 import { authService } from "../../../services/auth/auth.service";
 
 import "./LoginWithPassword.css";
+import { useAuth } from "../../../contexts/AuthContext";
 
 const LoginWithPasswordPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
@@ -77,7 +77,7 @@ const LoginWithPasswordPage: React.FC = () => {
     }
   };
 
-  const router = useIonRouter();
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const loginHandler = () => {
     setIsLoading(true);
@@ -88,12 +88,12 @@ const LoginWithPasswordPage: React.FC = () => {
         const { access_token: accessToken } = res;
 
         if (isRememberMeChecked) {
-          localStorage.setItem("access_token", accessToken);
+          localStorage.setItem("@ACCESS_TOKEN", accessToken);
         } else {
-          sessionStorage.setItem("access_token", accessToken);
+          sessionStorage.setItem("@ACCESS_TOKEN", accessToken);
         }
 
-        router.push("/home", "root", "replace");
+        setIsAuthenticated(true);
       })
       .catch((error) => {
         const { message } = error.response?.data || error;
@@ -112,7 +112,7 @@ const LoginWithPasswordPage: React.FC = () => {
       <IonHeader id="header">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
+            <IonBackButton defaultHref="/"></IonBackButton>
           </IonButtons>
 
           <IonTitle>Login com senha</IonTitle>
@@ -170,7 +170,7 @@ const LoginWithPasswordPage: React.FC = () => {
                 checked={isRememberMeChecked}
                 onIonChange={(e) => setIsRememberMeChecked(e.detail.checked)}
               >
-                Lembre de mim - {isRememberMeChecked ? "Ativado" : "Desativado"}
+                Lembre de mim
               </IonCheckbox>
             </IonCol>
           </IonRow>

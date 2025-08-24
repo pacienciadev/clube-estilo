@@ -1,46 +1,61 @@
 import React from "react";
-import { Switch, Redirect } from "react-router-dom";
+
+import { Redirect, Route } from "react-router-dom";
 
 import { LoginPage } from "../pages/auth/login";
 import { HomePage } from "../pages/home";
 
-import { PublicRoute } from "./PublicRoute";
-import { PrivateRoute } from "./PrivateRoute";
 import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
 import { RegisterPage } from "../pages/auth/register";
+import { IonRouterOutlet } from "@ionic/react";
+import { useAuth } from "../contexts/AuthContext";
 
 export const AppRoutes: React.FC = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
-    <Switch>
-      <PublicRoute
+    <IonRouterOutlet>
+      <Route
         exact
+        path="/"
+        render={() =>
+          isAuthenticated ? (
+            <Redirect to="/home/tab1" />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+
+      <Route
         path="/login"
-        component={LoginPage}
-        restricted={true}
+        render={() => (!isAuthenticated ? <LoginPage /> : <Redirect to="/" />)}
       />
 
-      <PublicRoute
-        restricted={true}
-        component={LoginWithPasswordPage}
+      <Route
         path="/login-with-password"
-        exact
+        render={() =>
+          !isAuthenticated ? <LoginWithPasswordPage /> : <Redirect to="/" />
+        }
       />
 
-      <PublicRoute
-        restricted={true}
-        component={RegisterPage}
+      <Route
         path="/register"
-        exact
+        render={() =>
+          !isAuthenticated ? <RegisterPage /> : <Redirect to="/" />
+        }
       />
 
-      {/* Rotas protegidas */}
-      <PrivateRoute exact path="/home" component={HomePage} />
-
-      {/* Rota raiz redireciona para /home (se logado) ou /login (se não logado) */}
-      <PrivateRoute exact path="/" component={HomePage} />
-
-      {/* Se nenhuma rota corresponder, redireciona para a rota raiz */}
-      <Redirect to="/" />
-    </Switch>
+      <Route
+        path="/home"
+        render={(props) =>
+          isAuthenticated ? <HomePage {...props} /> : <Redirect to="/" />
+        }
+      />
+    </IonRouterOutlet>
   );
 };

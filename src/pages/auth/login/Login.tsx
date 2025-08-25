@@ -4,13 +4,12 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
-  IonList,
   IonPage,
   IonRow,
   IonText,
 } from "@ionic/react";
 
-import { lockClosed, logoGoogle, personCircle } from "ionicons/icons";
+import { lockClosed, personCircle } from "ionicons/icons";
 
 import { AuthLogoComponent } from "../components/auth-logo";
 
@@ -31,38 +30,30 @@ const LoginPage: React.FC = () => {
             <p>Acesse sua conta para usar o app.</p>
           </IonRow>
         </IonGrid>
+        
+        <IonCol class="ion-padding"></IonCol>
 
-        <IonList className="login-form">
-          <IonButton expand="block" color="danger">
-            <IonIcon slot="start" icon={logoGoogle}></IonIcon>
+        <IonButton expand="block" routerLink="/login-with-password">
+          <IonIcon
+            slot="start"
+            icon={lockClosed}
+            className="ion-align-self-start"
+          ></IonIcon>
 
-            <IonText>Entrar com o Google</IonText>
-          </IonButton>
+          <IonText>Entrar com o E-mail e Senha</IonText>
+        </IonButton>
 
-          <IonCol class="ion-padding"></IonCol>
+        <IonCol class="ion-padding"></IonCol>
 
-          <IonButton expand="block" routerLink="/login-with-password">
-            <IonIcon
-              slot="start"
-              icon={lockClosed}
-              className="ion-align-self-start"
-            ></IonIcon>
+        <IonButton fill="clear" expand="block" routerLink="/register">
+          <IonIcon
+            slot="start"
+            icon={personCircle}
+            className="ion-align-self-start"
+          ></IonIcon>
 
-            <IonText>Entrar com o E-mail e Senha</IonText>
-          </IonButton>
-
-          <IonCol class="ion-padding"></IonCol>
-
-          <IonButton fill="clear" expand="block" routerLink="/register">
-            <IonIcon
-              slot="start"
-              icon={personCircle}
-              className="ion-align-self-start"
-            ></IonIcon>
-
-            <IonText>Criar nova conta</IonText>
-          </IonButton>
-        </IonList>
+          <IonText>Criar nova conta</IonText>
+        </IonButton>
       </IonContent>
     </IonPage>
   );

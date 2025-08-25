@@ -15,7 +15,7 @@ import Tab3 from "./Tab3";
 
 import { ellipse, square, triangle } from "ionicons/icons";
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC<object> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
@@ -27,7 +27,7 @@ const HomePage: React.FC = () => {
           <Tab2 />
         </Route>
 
-        <Route path="/home/tab3">
+        <Route exact path="/home/tab3">
           <Tab3 />
         </Route>
       </IonRouterOutlet>

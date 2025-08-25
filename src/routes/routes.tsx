@@ -1,49 +1,61 @@
 import React from "react";
 
-import { Redirect, Route } from "react-router";
-
-import { IonRouterOutlet } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router-dom";
 
 import { LoginPage } from "../pages/auth/login";
-import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
-import { RegisterPage } from "../pages/auth/register";
 import { HomePage } from "../pages/home";
 
-import { PublicRoute } from "./PublicRoute";
-import { PrivateRoute } from "./PrivateRoute";
+import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
+import { RegisterPage } from "../pages/auth/register";
+import { IonRouterOutlet } from "@ionic/react";
+import { useAuth } from "../contexts/AuthContext";
 
-export const Routes: React.FC = () => {
+export const AppRoutes: React.FC = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <PublicRoute
-          restricted={true}
-          component={LoginPage}
-          path="/login"
-          exact
-        />
+    <IonRouterOutlet>
+      <Route
+        exact
+        path="/"
+        render={() =>
+          isAuthenticated ? (
+            <Redirect to="/home/tab1" />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
 
-        <PublicRoute
-          restricted={true}
-          component={LoginWithPasswordPage}
-          path="/login-with-password"
-          exact
-        />
+      <Route
+        path="/login"
+        render={() => (!isAuthenticated ? <LoginPage /> : <Redirect to="/" />)}
+      />
 
-        <PublicRoute
-          restricted={true}
-          component={RegisterPage}
-          path="/register"
-          exact
-        />
+      <Route
+        path="/login-with-password"
+        render={() =>
+          !isAuthenticated ? <LoginWithPasswordPage /> : <Redirect to="/" />
+        }
+      />
 
-        <PrivateRoute component={HomePage} path="/home" />
+      <Route
+        path="/register"
+        render={() =>
+          !isAuthenticated ? <RegisterPage /> : <Redirect to="/" />
+        }
+      />
 
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
+      <Route
+        path="/home"
+        render={(props) =>
+          isAuthenticated ? <HomePage {...props} /> : <Redirect to="/" />
+        }
+      />
+    </IonRouterOutlet>
   );
 };

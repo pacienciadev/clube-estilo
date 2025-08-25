@@ -77,7 +77,7 @@ const LoginWithPasswordPage: React.FC = () => {
     }
   };
 
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuth();
 
   const loginHandler = () => {
     setIsLoading(true);

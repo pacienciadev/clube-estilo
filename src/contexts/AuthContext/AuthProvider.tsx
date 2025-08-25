@@ -12,8 +12,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const localUserData =
+    localStorage.getItem("@USER_DATA") || sessionStorage.getItem("@USER_DATA");
+
+  const localToken =
+    localStorage.getItem("@ACCESS_TOKEN") ||
+    sessionStorage.getItem("@ACCESS_TOKEN");
+  console.log(
+    "%c | AuthProvider | localToken:",
+    "background: black; color: lime",
+    localToken
+  );
+
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("@USER_DATA") || "{}");
+    const user = localUserData ? JSON.parse(localUserData) : null;
+
+    if (!user && localToken) {
+      checkAuth(); // verifica no backend a validade do token
+
+      return;
+    }
 
     const expirationDate = dayjs.unix(user.exp);
 
@@ -43,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const checkLocalToken = () => {
-    const user = JSON.parse(sessionStorage.getItem("@USER_DATA") || "{}");
+    const user = localUserData ? JSON.parse(localUserData) : null;
 
     if (user) {
       setIsAuthenticated(true);

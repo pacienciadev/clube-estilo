@@ -10,6 +10,8 @@ declare module "ionicons/icons" {
   const close: string;
   const logOutOutline: string;
   const star: string;
+  const earth: string;
+  const create: string;
   
   export {
     ellipse,
@@ -23,5 +25,7 @@ declare module "ionicons/icons" {
     close,
     logOutOutline,
     star,
+    earth,
+    create,
   };
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import {
   IonButton,
   IonContent,
-  IonHeader,
+  IonGrid,
   IonIcon,
   IonItem,
   IonLabel,
@@ -11,14 +11,14 @@ import {
   IonMenu,
   IonMenuToggle,
   IonPage,
+  IonRow,
   IonSpinner,
-  IonTitle,
-  IonToolbar,
+  IonText,
 } from "@ionic/react";
 
 import { menuController } from "@ionic/core/components";
 
-import { close, logOutOutline, star } from "ionicons/icons";
+import { close, create, earth, logOutOutline, star } from "ionicons/icons";
 
 import { HomeNav } from "../../../components/home-nav";
 import { useAuth } from "../../../contexts/AuthContext";
@@ -87,15 +87,50 @@ export const HomeTab = () => {
         <IonContent fullscreen>
           <HomeNav onMenuBtnClick={openSideMenu} />
 
-          <IonHeader collapse="condense">
-            <IonToolbar>
-              <IonTitle size="large">Tab 1</IonTitle>
-            </IonToolbar>
-          </IonHeader>
+          <IonRow
+            className="ion-align-items-center ion-justify-content-center ion-padding"
+            style={{ gap: "10px", backgroundColor: "#2C3E50" }}
+          >
+            <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
 
-          <IonButton expand="block" onClick={logoutHandler}>
-            Logout
-          </IonButton>
+            <IonText>
+              <strong>Endereço não cadastrado</strong>
+            </IonText>
+
+            <IonButton>
+              cadastrar
+              <IonIcon slot="end" icon={create}></IonIcon>
+            </IonButton>
+          </IonRow>
+
+          <IonRow className="ion-padding">
+            <IonText
+              style={{
+                lineHeight: "0",
+                paddingTop: "8px",
+                paddingBottom: "22px",
+              }}
+            >
+              <h2>Olá Usuário,</h2>
+              <p>Preparado para o seu próximo agendamento?</p>
+            </IonText>
+          </IonRow>
+
+          <IonRow
+            className="ion-align-items-center ion-justify-content-center ion-padding"
+            style={{ gap: "10px", backgroundColor: "#2C3E50" }}
+          >
+            <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
+
+            <IonText>
+              <strong>Endereço não cadastrado</strong>
+            </IonText>
+
+            <IonButton>
+              cadastrar
+              <IonIcon slot="end" icon={create}></IonIcon>
+            </IonButton>
+          </IonRow>
         </IonContent>
       </IonPage>
     </>

@@ -3,7 +3,7 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
 import { LoginPage } from "../pages/auth/login";
-import { HomePage } from "../pages/home";
+import { TabsPage } from "../pages/tabs";
 
 import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
 import { RegisterPage } from "../pages/auth/register";
@@ -24,7 +24,7 @@ export const AppRoutes: React.FC = () => {
         path="/"
         render={() =>
           isAuthenticated ? (
-            <Redirect to="/home/tab1" />
+            <Redirect to="/tabs/home" />
           ) : (
             <Redirect to="/login" />
           )
@@ -51,9 +51,9 @@ export const AppRoutes: React.FC = () => {
       />
 
       <Route
-        path="/home"
+        path="/tabs"
         render={(props) =>
-          isAuthenticated ? <HomePage {...props} /> : <Redirect to="/" />
+          isAuthenticated ? <TabsPage {...props} /> : <Redirect to="/" />
         }
       />
     </IonRouterOutlet>

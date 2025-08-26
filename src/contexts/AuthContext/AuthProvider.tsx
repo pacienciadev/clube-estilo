@@ -12,36 +12,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const localUserData =
+  const localUserData = () =>
     localStorage.getItem("@USER_DATA") || sessionStorage.getItem("@USER_DATA");
 
-  const localToken =
+  const localTokenData = () =>
     localStorage.getItem("@ACCESS_TOKEN") ||
     sessionStorage.getItem("@ACCESS_TOKEN");
-  console.log(
-    "%c | AuthProvider | localToken:",
-    "background: black; color: lime",
-    localToken
-  );
 
   useEffect(() => {
-    const user = localUserData ? JSON.parse(localUserData) : null;
+    const localUser = localUserData();
+    const localToken = localTokenData();
+
+    const user = localUser ? JSON.parse(localUser) : null;
 
     if (!user && localToken) {
-      checkAuth(); // verifica no backend a validade do token
-
+      // verifica no backend a validade do token
+      checkAuth();
       return;
     }
 
-    const expirationDate = dayjs.unix(user.exp);
+    if (user) {
+      const expirationDate = dayjs.unix(user.exp);
 
-    const dateNow = dayjs();
+      const dateNow = dayjs();
 
-    if (dateNow.isAfter(expirationDate)) {
-      checkAuth(); // verifica no backend a validade do token
-    } else {
-      checkLocalToken(); // verifica o token armazenado localmente
+      if (dateNow.isAfter(expirationDate)) {
+        // verifica no backend a validade do token
+        checkAuth();
+      } else {
+        setIsAuthenticated(true);
+      }
     }
+
+    setIsLoading(false);
   }, []);
 
   const checkAuth = async () => {
@@ -60,21 +63,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const checkLocalToken = () => {
-    const user = localUserData ? JSON.parse(localUserData) : null;
+  const logOut = () => {
+    sessionStorage.clear();
+    localStorage.clear();
 
-    if (user) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-    }
-
+    setIsAuthenticated(false);
     setIsLoading(false);
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, setIsAuthenticated, isLoading }}
+      value={{ isAuthenticated, setIsAuthenticated, isLoading, logOut }}
     >
       {children}
     </AuthContext.Provider>

@@ -9,39 +9,41 @@ import {
 
 import { Route } from "react-router";
 
-import Tab1 from "./Tab1";
+import { HomeTab } from "./home";
 import Tab2 from "./Tab2";
 import Tab3 from "./Tab3";
 
-import { ellipse, square, triangle } from "ionicons/icons";
+import { ellipse, square, homeOutline } from "ionicons/icons";
 
-const HomePage: React.FC<object> = () => {
+export const TabsPage: React.FC<object> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/home/tab1">
-          <Tab1 />
+        <Route exact path="/tabs/home">
+          <HomeTab />
         </Route>
 
-        <Route exact path="/home/tab2">
+        <Route exact path="/tabs/tab2">
           <Tab2 />
         </Route>
 
-        <Route exact path="/home/tab3">
+        <Route exact path="/tabs/tab3">
           <Tab3 />
         </Route>
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
-        <IonTabButton tab="tab1" href="/home/tab1">
-          <IonIcon aria-hidden="true" icon={triangle} />
-          <IonLabel>Tab 1</IonLabel>
+        <IonTabButton tab="home-tab" href="/tabs/home">
+          <IonIcon aria-hidden="true" icon={homeOutline} />
+          <IonLabel>Home</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab2" href="/home/tab2">
+
+        <IonTabButton tab="tab2" href="/tabs/tab2">
           <IonIcon aria-hidden="true" icon={ellipse} />
           <IonLabel>Tab 2</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="tab3" href="/home/tab3">
+        
+        <IonTabButton tab="tab3" href="/tabs/tab3">
           <IonIcon aria-hidden="true" icon={square} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>
@@ -49,5 +51,3 @@ const HomePage: React.FC<object> = () => {
     </IonTabs>
   );
 };
-
-export default HomePage;

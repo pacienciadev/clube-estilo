@@ -1,19 +1,27 @@
 declare module "ionicons/icons" {
   const ellipse: string;
   const square: string;
-  const triangle: string;
+  const homeOutline: string;
   const lockClosed: string;
   const logoGoogle: string;
   const personCircle: string;
   const enterOutline: string;
+  const menu: string;
+  const close: string;
+  const logOutOutline: string;
+  const star: string;
   
   export {
     ellipse,
     square,
-    triangle,
+    homeOutline,
     lockClosed,
     logoGoogle,
     personCircle,
     enterOutline,
+    menu,
+    close,
+    logOutOutline,
+    star,
   };
 }

@@ -1,61 +1,31 @@
 import React from "react";
+import { Redirect, Route } from "react-router";
 
-import { Redirect, Route } from "react-router-dom";
-
-import { LoginPage } from "../pages/auth/login";
-import { TabsPage } from "../pages/tabs";
-
-import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
-import { RegisterPage } from "../pages/auth/register";
 import { IonRouterOutlet } from "@ionic/react";
-import { useAuth } from "../contexts/AuthContext";
+
+import { LoginPage } from "../pages/Auth/Login";
+import { TabsPage } from "../pages/Tabs";
+
+import { PrivateRoute, PublicRoute } from "./components";
+import { LoginWithPasswordPage } from "../pages/Auth/LoginWithPassword";
+import { RegisterPage } from "../pages/Auth/Register";
 
 export const AppRoutes: React.FC = () => {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
-
   return (
     <IonRouterOutlet>
-      <Route
-        exact
-        path="/"
-        render={() =>
-          isAuthenticated ? (
-            <Redirect to="/tabs/home" />
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
-      />
-
-      <Route
-        path="/login"
-        render={() => (!isAuthenticated ? <LoginPage /> : <Redirect to="/" />)}
-      />
-
-      <Route
+      <PublicRoute path="/login" component={LoginPage} exact />
+      <PublicRoute
         path="/login-with-password"
-        render={() =>
-          !isAuthenticated ? <LoginWithPasswordPage /> : <Redirect to="/" />
-        }
+        component={LoginWithPasswordPage}
+        exact
       />
+      <PublicRoute path="/register" component={RegisterPage} exact />
 
-      <Route
-        path="/register"
-        render={() =>
-          !isAuthenticated ? <RegisterPage /> : <Redirect to="/" />
-        }
-      />
+      <PrivateRoute path="/tabs" component={TabsPage} />
 
-      <Route
-        path="/tabs"
-        render={(props) =>
-          isAuthenticated ? <TabsPage {...props} /> : <Redirect to="/" />
-        }
-      />
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
     </IonRouterOutlet>
   );
 };

@@ -2,8 +2,9 @@ import { IonButton, IonIcon } from "@ionic/react";
 
 import { menu } from "ionicons/icons";
 
+import { LogoComponent } from "../Logo";
+
 import "./HomeNav.css";
-import { LogoComponent } from "../logo";
 
 export const HomeNav = ({ onMenuBtnClick }: { onMenuBtnClick: () => void }) => {
   return (

@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { useHistory } from "react-router";
 
 import {
   IonButton,
   IonContent,
-  IonGrid,
   IonIcon,
   IonItem,
   IonLabel,
@@ -20,21 +20,27 @@ import { menuController } from "@ionic/core/components";
 
 import { close, create, earth, logOutOutline, star } from "ionicons/icons";
 
-import { HomeNav } from "../../../components/home-nav";
-import { useAuth } from "../../../contexts/AuthContext";
+import { HomeNav } from "../../../components/HomeNav";
+
+import { useAuth } from "../../../contexts/useAuth";
 
 import "./HomeTab.css";
 
 export const HomeTab = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { logOut } = useAuth();
+  const history = useHistory();
+
+  const { logout } = useAuth();
 
   const logoutHandler = () => {
     setIsLoading(true);
 
     setTimeout(() => {
-      logOut();
+      logout();
+
+      // Redireciona para o login
+      history.push("/login", { replace: true });
 
       setIsLoading(false);
     }, 2000); // Simulate a network request
@@ -119,18 +125,7 @@ export const HomeTab = () => {
           <IonRow
             className="ion-align-items-center ion-justify-content-center ion-padding"
             style={{ gap: "10px", backgroundColor: "#2C3E50" }}
-          >
-            <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
-
-            <IonText>
-              <strong>Endereço não cadastrado</strong>
-            </IonText>
-
-            <IonButton>
-              cadastrar
-              <IonIcon slot="end" icon={create}></IonIcon>
-            </IonButton>
-          </IonRow>
+          ></IonRow>
         </IonContent>
       </IonPage>
     </>

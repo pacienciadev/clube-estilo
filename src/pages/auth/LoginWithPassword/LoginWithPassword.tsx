@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 import {
   IonBackButton,
@@ -22,14 +23,14 @@ import {
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { AuthLogoComponent } from "../components/auth-logo";
-
 import { validateEmail, validatePassword } from "../../../utils";
-import { ToastComponent } from "../../../components/toast";
-import { authService } from "../../../services/auth/auth.service";
+
+import { AuthLogoComponent } from "../../../components/AuthLogo";
+import { ToastComponent } from "../../../components/Toast";
+
+import { useAuth } from "../../../contexts/useAuth";
 
 import "./LoginWithPassword.css";
-import { useAuth } from "../../../contexts/AuthContext";
 
 const LoginWithPasswordPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
@@ -45,7 +46,7 @@ const LoginWithPasswordPage: React.FC = () => {
   const [isValidEmail, setIsValidEmail] = useState<boolean>();
   const [isValidPassword, setIsValidPassword] = useState<boolean>();
 
-  const [isRememberMeChecked, setIsRememberMeChecked] = useState<boolean>();
+  const [isRememberMeChecked, setIsRememberMeChecked] = useState<boolean>(false);
 
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -77,28 +78,19 @@ const LoginWithPasswordPage: React.FC = () => {
     }
   };
 
-  const { setIsAuthenticated } = useAuth();
+  const history = useHistory();
+
+  const { login } = useAuth();
 
   const loginHandler = () => {
     setIsLoading(true);
 
-    authService
-      .login({ email, password })
-      .then((res) => {
-        const { access_token: accessToken } = res;
-
-        if (isRememberMeChecked) {
-          localStorage.setItem("@ACCESS_TOKEN", accessToken);
-        } else {
-          sessionStorage.setItem("@ACCESS_TOKEN", accessToken);
-        }
-
-        setIsAuthenticated(true);
+    login({ email, password, isRememberMeChecked })
+      .then(() => {
+        history.push("/tabs/home");
       })
-      .catch((error) => {
-        const { message } = error.response?.data || error;
-
-        setToastMessage(message);
+      .catch((error: string) => {
+        setToastMessage(error);
         setToastType("alert");
         setIsToastOpened(true);
       })

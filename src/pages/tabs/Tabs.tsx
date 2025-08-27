@@ -7,9 +7,9 @@ import {
   IonTabs,
 } from "@ionic/react";
 
-import { Route } from "react-router";
+import { Redirect, Route } from "react-router";
 
-import { HomeTab } from "./home";
+import { HomeTab } from "./Home";
 import Tab2 from "./Tab2";
 import Tab3 from "./Tab3";
 
@@ -30,21 +30,25 @@ export const TabsPage: React.FC<object> = () => {
         <Route exact path="/tabs/tab3">
           <Tab3 />
         </Route>
+
+        <Route exact path="/tabs">
+          <Redirect to="/tabs/home" />
+        </Route>
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
         <IonTabButton tab="home-tab" href="/tabs/home">
-          <IonIcon aria-hidden="true" icon={homeOutline} />
+          <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
         <IonTabButton tab="tab2" href="/tabs/tab2">
-          <IonIcon aria-hidden="true" icon={ellipse} />
+          <IonIcon icon={ellipse} />
           <IonLabel>Tab 2</IonLabel>
         </IonTabButton>
-        
+
         <IonTabButton tab="tab3" href="/tabs/tab3">
-          <IonIcon aria-hidden="true" icon={square} />
+          <IonIcon icon={square} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>
       </IonTabBar>

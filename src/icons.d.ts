@@ -15,6 +15,7 @@ declare module "ionicons/icons" {
   const heart: string;
   const people: string;
   const options: string;
+  const grid: string;
   
   export {
     ellipse,
@@ -33,5 +34,6 @@ declare module "ionicons/icons" {
     heart,
     people,
     options,
+    grid,
   };
 }

@@ -1,7 +1,8 @@
 import { IonCol, IonIcon, IonRow, IonText } from "@ionic/react";
 
-import "./CategoryBox.css";
 import { grid } from "ionicons/icons";
+
+import "./CategoryBox.css";
 
 export const CategoryBox = () => {
   const categories = [

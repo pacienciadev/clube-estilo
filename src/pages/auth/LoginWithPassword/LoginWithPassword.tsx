@@ -100,7 +100,13 @@ const LoginWithPasswordPage: React.FC = () => {
   };
 
   return (
-    <IonPage>
+    <IonPage
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <IonHeader id="header">
         <IonToolbar>
           <IonButtons slot="start">
@@ -111,7 +117,7 @@ const LoginWithPasswordPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding login-wrapper">
         <IonGrid className="login-title">
           <AuthLogoComponent />
 
@@ -200,14 +206,14 @@ const LoginWithPasswordPage: React.FC = () => {
 
           <IonText>Criar nova conta</IonText>
         </IonButton>
-
-        <ToastComponent
-          isOpen={isToastOpened}
-          onClose={setIsToastOpened}
-          message={toastMessage}
-          type={toastType}
-        />
       </IonContent>
+
+      <ToastComponent
+        isOpen={isToastOpened}
+        onClose={setIsToastOpened}
+        message={toastMessage}
+        type={toastType}
+      />
     </IonPage>
   );
 };

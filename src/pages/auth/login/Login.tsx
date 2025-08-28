@@ -17,8 +17,14 @@ import "./Login.css";
 
 const LoginPage: React.FC = () => {
   return (
-    <IonPage>
-      <IonContent className="ion-padding">
+    <IonPage
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <IonContent className="ion-padding login-wrapper">
         <IonGrid className="login-title">
           <AuthLogoComponent />
 

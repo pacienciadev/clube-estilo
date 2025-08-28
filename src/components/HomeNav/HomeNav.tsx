@@ -12,7 +12,7 @@ export const HomeNav = ({ onMenuBtnClick }: { onMenuBtnClick: () => void }) => {
       <div className="home-nav ion-padding">
         <LogoComponent size="100px" />
 
-        <IonButton fill="clear" size="large" onClick={onMenuBtnClick}>
+        <IonButton fill="clear" onClick={onMenuBtnClick}>
           Menu
           <IonIcon slot="end" icon={menu}></IonIcon>
         </IonButton>

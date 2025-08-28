@@ -1,0 +1,22 @@
+.category-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 100px;
+}
+
+.link-box {
+  display: flex;
+  border-radius: 4px;
+  height: 56px;
+  width: 56px;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-box {
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+}

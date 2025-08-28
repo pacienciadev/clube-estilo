@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 import { authService } from "../services/auth/auth.service";
 
@@ -11,12 +12,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [user, setUser] = useState<AuthContextType["user"]>();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const token =
       localStorage.getItem("@ACCESS_TOKEN") ||
       sessionStorage.getItem("@ACCESS_TOKEN");
+
+    setUser(jwtDecode(token || ""));
 
     if (token) {
       setIsAuthenticated(true);
@@ -60,7 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAuthenticated(false);
   };
 
-  const value = { isAuthenticated, login, logout };
+  const value = { isAuthenticated, user, login, logout };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -12,6 +12,9 @@ declare module "ionicons/icons" {
   const star: string;
   const earth: string;
   const create: string;
+  const heart: string;
+  const people: string;
+  const options: string;
   
   export {
     ellipse,
@@ -27,5 +30,8 @@ declare module "ionicons/icons" {
     star,
     earth,
     create,
+    heart,
+    people,
+    options,
   };
 }

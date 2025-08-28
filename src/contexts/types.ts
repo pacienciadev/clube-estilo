@@ -1,5 +1,11 @@
 export interface AuthContextType {
   isAuthenticated: boolean;
+  user?: {
+    sub: string;
+    userName: string;
+    iat: number;
+    exp: number;
+  };
   login: (params: {
     email: string;
     password: string;

@@ -3,7 +3,7 @@ import { IonButton, IonIcon } from "@ionic/react";
 import { menu } from "ionicons/icons";
 
 import "./HomeNav.css";
-import { LogoComponent } from "../logo";
+import { LogoComponent } from "../Logo";
 
 export const HomeNav = ({ onMenuBtnClick }: { onMenuBtnClick: () => void }) => {
   return (

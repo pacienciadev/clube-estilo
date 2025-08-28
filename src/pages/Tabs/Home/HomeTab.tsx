@@ -20,7 +20,7 @@ import { menuController } from "@ionic/core/components";
 
 import { close, logOutOutline, star } from "ionicons/icons";
 
-import { HomeNav } from "../../../components/home-nav";
+import { HomeNav } from "../../../components/HomeNav";
 import { useAuth } from "../../../contexts/AuthContext";
 
 import "./HomeTab.css";

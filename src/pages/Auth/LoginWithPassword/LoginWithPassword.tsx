@@ -22,14 +22,16 @@ import {
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { AuthLogoComponent } from "../components/auth-logo";
+import { AuthLogoComponent } from "../components/AuthLogo";
+import { ToastComponent } from "../../../components/Toast";
 
 import { validateEmail, validatePassword } from "../../../utils";
-import { ToastComponent } from "../../../components/toast";
+
+import { useAuth } from "../../../contexts/AuthContext";
+
 import { authService } from "../../../services/auth/auth.service";
 
 import "./LoginWithPassword.css";
-import { useAuth } from "../../../contexts/AuthContext";
 
 const LoginWithPasswordPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);

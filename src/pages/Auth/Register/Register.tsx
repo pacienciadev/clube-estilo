@@ -19,11 +19,11 @@ import {
 
 import { validateRegexEmail } from "../../../utils";
 
-import { ToastComponent } from "../../../components/toast";
+import { ToastComponent } from "../../../components/Toast";
 
-import { AuthLogoComponent } from "../components/auth-logo";
 
 import "./Register.css";
+import { AuthLogoComponent } from "../components/AuthLogo";
 
 const RegisterPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);

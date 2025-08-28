@@ -1,13 +1,13 @@
 import React from "react";
+import { IonRouterOutlet } from "@ionic/react";
 
 import { Redirect, Route } from "react-router-dom";
 
-import { LoginPage } from "../pages/auth/login";
-import { TabsPage } from "../pages/tabs";
+import { LoginPage } from "../pages/Auth/Login";
+import { TabsPage } from "../pages/Tabs";
 
-import { LoginWithPasswordPage } from "../pages/auth/login-with-password";
-import { RegisterPage } from "../pages/auth/register";
-import { IonRouterOutlet } from "@ionic/react";
+import { LoginWithPasswordPage } from "../pages/Auth/LoginWithPassword";
+import { RegisterPage } from "../pages/Auth/Register";
 import { useAuth } from "../contexts/AuthContext";
 
 export const AppRoutes: React.FC = () => {

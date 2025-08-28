@@ -9,11 +9,11 @@ import {
 
 import { Redirect, Route } from "react-router";
 
-import { ellipse, square, homeOutline } from "ionicons/icons";
-
-import { HomeTab } from "./home";
+import { HomeTab } from "./Home";
 import Tab2 from "./Tab2";
 import Tab3 from "./Tab3";
+
+import { ellipse, square, homeOutline } from "ionicons/icons";
 
 export const TabsPage: React.FC<object> = () => {
   return (

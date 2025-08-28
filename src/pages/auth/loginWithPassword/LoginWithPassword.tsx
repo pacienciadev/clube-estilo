@@ -25,8 +25,8 @@ import { enterOutline, personCircle } from "ionicons/icons";
 
 import { validateEmail, validatePassword } from "../../../utils";
 
-import { AuthLogoComponent } from "../../../components/auth-logo";
-import { ToastComponent } from "../../../components/toast";
+import { AuthLogoComponent } from "../../../components/AuthLogo";
+import { ToastComponent } from "../../../components/Toast";
 
 import { useAuth } from "../../../contexts/useAuth";
 

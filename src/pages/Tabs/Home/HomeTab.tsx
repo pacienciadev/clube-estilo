@@ -13,9 +13,9 @@ import { menuController } from "@ionic/core/components";
 
 import { create, earth, heart, star, people, options } from "ionicons/icons";
 
-import { HomeNav } from "../../../components/home-nav";
-import { SideMenu } from "../../../components/side-menu";
-import { CategoryBox } from "../../../components/category-box";
+import { HomeNav } from "../../../components/HomeNav";
+import { SideMenu } from "../../../components/SideMenu";
+import { CategoryBox } from "../../../components/CategoryBox";
 
 import { useAuth } from "../../../contexts/useAuth";
 

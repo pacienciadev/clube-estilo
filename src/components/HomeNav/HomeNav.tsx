@@ -2,7 +2,7 @@ import { IonButton, IonIcon } from "@ionic/react";
 
 import { menu } from "ionicons/icons";
 
-import { LogoComponent } from "../logo";
+import { LogoComponent } from "../Logo";
 
 import "./HomeNav.css";
 

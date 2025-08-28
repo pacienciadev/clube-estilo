@@ -19,9 +19,9 @@ import {
 
 import { validateRegexEmail } from "../../../utils";
 
-import { ToastComponent } from "../../../components/Toast";
+import { ToastComponent } from "../../../components/toast";
 
-import { AuthLogoComponent } from "../../../components/AuthLogo";
+import { AuthLogoComponent } from "../../../components/auth-logo";
 
 import "./Register.css";
 

@@ -3,12 +3,12 @@ import { Redirect, Route } from "react-router";
 
 import { IonRouterOutlet } from "@ionic/react";
 
-import { LoginPage } from "../pages/Auth/Login";
-import { TabsPage } from "../pages/Tabs";
+import { LoginPage } from "../pages/auth/login";
+import { TabsPage } from "../pages/tabs";
 
 import { PrivateRoute, PublicRoute } from "./components";
-import { LoginWithPasswordPage } from "../pages/Auth/LoginWithPassword";
-import { RegisterPage } from "../pages/Auth/Register";
+import { LoginWithPasswordPage } from "../pages/auth/loginWithPassword";
+import { RegisterPage } from "../pages/auth/register";
 
 export const AppRoutes: React.FC = () => {
   return (

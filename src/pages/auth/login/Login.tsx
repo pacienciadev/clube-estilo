@@ -11,7 +11,7 @@ import {
 
 import { lockClosed, personCircle } from "ionicons/icons";
 
-import { AuthLogoComponent } from "../../../components/AuthLogo";
+import { AuthLogoComponent } from "../../../components/auth-logo";
 
 import "./Login.css";
 

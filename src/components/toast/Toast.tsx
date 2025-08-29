@@ -2,7 +2,7 @@ import { IonToast } from "@ionic/react";
 
 import "./Toast.css";
 
-function ToastComponent({
+export function ToastComponent({
   isOpen,
   message,
   type,
@@ -27,5 +27,4 @@ function ToastComponent({
       ></IonToast>
     </>
   );
-}
-export default ToastComponent;
+};

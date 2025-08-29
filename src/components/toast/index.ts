@@ -1,3 +1,2 @@
-import ToastComponent from "./Toast";
 
-export { ToastComponent };
+export { ToastComponent } from "./Toast"

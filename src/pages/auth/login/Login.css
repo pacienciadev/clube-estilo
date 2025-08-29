@@ -5,3 +5,7 @@
 .login-form {
   margin-top: 24px;
 }
+
+.login-wrapper {
+  max-width: 360px;
+}

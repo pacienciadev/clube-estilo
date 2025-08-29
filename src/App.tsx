@@ -30,9 +30,11 @@ import "@ionic/react/css/palettes/dark.system.css";
 /* Theme variables */
 import "./theme/variables.css";
 
-import { IonReactRouter } from "@ionic/react-router"; 
-import { AppRoutes } from "./routes";
+import { IonReactRouter } from "@ionic/react-router";
+
 import { AuthProvider } from "./contexts/AuthContext";
+
+import { AppRoutes } from "./routes";
 
 setupIonicReact();
 

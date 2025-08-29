@@ -11,14 +11,20 @@ import {
 
 import { lockClosed, personCircle } from "ionicons/icons";
 
-import { AuthLogoComponent } from "../components/auth-logo";
+import { AuthLogoComponent } from "../../../components/AuthLogo";
 
 import "./Login.css";
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
   return (
-    <IonPage>
-      <IonContent className="ion-padding">
+    <IonPage
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <IonContent className="ion-padding login-wrapper">
         <IonGrid className="login-title">
           <AuthLogoComponent />
 
@@ -30,10 +36,14 @@ const LoginPage: React.FC = () => {
             <p>Acesse sua conta para usar o app.</p>
           </IonRow>
         </IonGrid>
-        
+
         <IonCol class="ion-padding"></IonCol>
 
-        <IonButton expand="block" routerLink="/login-with-password">
+        <IonButton
+          expand="block"
+          routerLink="/login-with-password"
+          routerDirection="forward"
+        >
           <IonIcon
             slot="start"
             icon={lockClosed}
@@ -58,5 +68,3 @@ const LoginPage: React.FC = () => {
     </IonPage>
   );
 };
-
-export default LoginPage;

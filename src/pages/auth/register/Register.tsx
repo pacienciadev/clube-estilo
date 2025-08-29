@@ -19,13 +19,12 @@ import {
 
 import { validateRegexEmail } from "../../../utils";
 
-import { ToastComponent } from "../../../components/toast";
-
-import { AuthLogoComponent } from "../components/auth-logo";
+import { ToastComponent } from "../../../components/Toast";
+import { AuthLogoComponent } from "../../../components/AuthLogo";
 
 import "./Register.css";
 
-const RegisterPage: React.FC = () => {
+export const RegisterPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"alert" | "success">("alert");
@@ -219,5 +218,3 @@ const RegisterPage: React.FC = () => {
     </IonPage>
   );
 };
-
-export default RegisterPage;

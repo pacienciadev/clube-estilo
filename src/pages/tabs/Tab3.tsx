@@ -8,7 +8,7 @@ import {
 
 import "./Tab3.css";
 
-const Tab3: React.FC = () => {
+export const Tab3: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -26,5 +26,3 @@ const Tab3: React.FC = () => {
     </IonPage>
   );
 };
-
-export default Tab3;

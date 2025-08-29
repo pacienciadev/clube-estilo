@@ -10,7 +10,13 @@ declare module "ionicons/icons" {
   const close: string;
   const logOutOutline: string;
   const star: string;
-  
+  const earth: string;
+  const create: string;
+  const heart: string;
+  const people: string;
+  const options: string;
+  const grid: string;
+
   export {
     ellipse,
     square,
@@ -23,5 +29,11 @@ declare module "ionicons/icons" {
     close,
     logOutOutline,
     star,
+    earth,
+    create,
+    heart,
+    people,
+    options,
+    grid,
   };
 }

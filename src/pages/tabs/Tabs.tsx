@@ -9,7 +9,7 @@ import {
 
 import { Redirect, Route } from "react-router";
 
-import { HomeTab } from "./Home";
+import { HomeTab } from "./HomeTab";
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
 

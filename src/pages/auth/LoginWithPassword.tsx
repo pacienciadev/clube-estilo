@@ -23,12 +23,12 @@ import {
 
 import { enterOutline, personCircle } from "ionicons/icons";
 
-import { validateEmail, validatePassword } from "../../../utils";
+import { validateEmail, validatePassword } from "../../utils";
 
-import { AuthLogoComponent } from "../../../components/AuthLogo";
-import { ToastComponent } from "../../../components/Toast";
+import { AuthLogoComponent } from "../../components/AuthLogo";
+import { ToastComponent } from "../../components/Toast";
 
-import { useAuth } from "../../../contexts/useAuth";
+import { useAuth } from "../../contexts/useAuth";
 
 import "./LoginWithPassword.css";
 

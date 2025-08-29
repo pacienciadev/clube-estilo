@@ -17,10 +17,10 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { validateRegexEmail } from "../../../utils";
+import { validateRegexEmail } from "../../utils";
 
-import { ToastComponent } from "../../../components/Toast";
-import { AuthLogoComponent } from "../../../components/AuthLogo";
+import { ToastComponent } from "../../components/Toast";
+import { AuthLogoComponent } from "../../components/AuthLogo";
 
 import "./Register.css";
 

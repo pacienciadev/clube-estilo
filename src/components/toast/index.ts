@@ -1,2 +1,0 @@
-
-export { ToastComponent } from "./Toast"

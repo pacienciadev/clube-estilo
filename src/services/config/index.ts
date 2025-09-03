@@ -1,9 +1,6 @@
 import axios from "axios";
 
-const baseURL =
-  import.meta.env.VITE_ENV === "production"
-    ? "https://api.prod.com" //substituir para url/ip publico da maquina virtual quando for para produção
-    : "http://localhost:3000";
+const baseURL = import.meta.env.VITE_API_URL;
 
 const token =
   localStorage.getItem("@ACCESS_TOKEN") ||

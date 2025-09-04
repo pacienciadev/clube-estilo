@@ -82,8 +82,8 @@ export const ProfileTab: React.FC = () => {
               }}
             >
               <IonText
+                color="dark"
                 style={{
-                  color: "rgb(255, 255, 255)",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
@@ -96,7 +96,7 @@ export const ProfileTab: React.FC = () => {
 
               <IonText style={{ color: "#777777ff" }}>
                 {/* {user?.email || "N/a"} */}
-                rafapaci@gmail.com
+                user@email.com
               </IonText>
             </IonCol>
 

@@ -19,6 +19,7 @@ export const InitialsAvatar = ({
   };
 
   const avatarHandler = (userName: string) => {
+
     const nameParts = userName.trim().split(/\s+/);
     const firstInitial = nameParts[0]?.charAt(0) || "";
     const lastInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0) : "";

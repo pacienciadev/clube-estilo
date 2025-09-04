@@ -19,10 +19,13 @@ export const InitialsAvatar = ({
   };
 
   const avatarHandler = (userName: string) => {
-    const [firstName, lastName] = userName.split(" ");
+
+    const nameParts = userName.trim().split(/\s+/);
+    const firstInitial = nameParts[0]?.charAt(0) || "";
+    const lastInitial = nameParts.length > 1 ? nameParts[nameParts.length - 1].charAt(0) : "";
 
     return {
-      initials: `${firstName.charAt(0)}${lastName.charAt(0)}`,
+      initials: `${firstInitial}${lastInitial}`,
       backgroundColor: getRandomColor(),
     };
   };

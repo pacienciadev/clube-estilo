@@ -34,7 +34,7 @@ export const HomeTab = () => {
 
       <IonPage id="main-content">
         <IonContent fullscreen>
-          <HomeNav onMenuBtnClick={openSideMenu} />
+          <HomeNav />
 
           <IonRow
             className="ion-align-items-center ion-justify-content-center ion-padding address-text"
@@ -91,88 +91,82 @@ export const HomeTab = () => {
             </IonCol>
 
             <IonCol className="ion-text-end">
-              <IonButton fill="outline" color="primary">
+              <IonButton fill="outline" color="primary" onClick={openSideMenu}>
                 Filtros
                 <IonIcon slot="end" icon={options}></IonIcon>
               </IonButton>
             </IonCol>
           </IonRow>
 
-          <IonRow className="ion-padding-horizontal">
-            <IonCol>
-              <IonCard>
-                <div className="card-wrapper">
-                  <div className="card-image"></div>
+          <IonCard>
+            <div className="card-wrapper">
+              <div className="card-image"></div>
 
-                  <div className="card-content">
-                    <div className="title">Old School Barbers</div>
+              <div className="card-content">
+                <div className="title">Old School Barbers</div>
 
-                    <div className="details">
-                      <div className="rating">
-                        <IonIcon icon={star}></IonIcon>
-                        4.8
-                      </div>
-
-                      <div>|</div>
-
-                      <div className="category">Barbearia</div>
-
-                      <div>|</div>
-
-                      <div className="distance">2.5 km</div>
-                    </div>
-
-                    <div className="online-available">
-                      <IonIcon icon={people}></IonIcon> 4 Profissionais
-                      disponíveis
-                    </div>
+                <div className="details">
+                  <div className="rating">
+                    <IonIcon icon={star}></IonIcon>
+                    4.8
                   </div>
 
-                  <div className="card-rating">
-                    <IonButton shape="round" fill="clear" color="danger">
-                      <IonIcon slot="icon-only" icon={heart}></IonIcon>
-                    </IonButton>
-                  </div>
+                  <div>|</div>
+
+                  <div className="category">Barbearia</div>
+
+                  <div>|</div>
+
+                  <div className="distance">2.5 km</div>
                 </div>
-              </IonCard>
 
-              <IonCard>
-                <div className="card-wrapper">
-                  <div className="card-image"></div>
-
-                  <div className="card-content">
-                    <div className="title">Old School Barbers</div>
-
-                    <div className="details">
-                      <div className="rating">
-                        <IonIcon icon={star}></IonIcon>
-                        4.8
-                      </div>
-
-                      <div>|</div>
-
-                      <div className="category">Barbearia</div>
-
-                      <div>|</div>
-
-                      <div className="distance">2.5 km</div>
-                    </div>
-
-                    <div className="online-available">
-                      <IonIcon icon={people}></IonIcon> 4 Profissionais
-                      disponíveis
-                    </div>
-                  </div>
-
-                  <div className="card-rating">
-                    <IonButton shape="round" fill="clear" color="danger">
-                      <IonIcon slot="icon-only" icon={heart}></IonIcon>
-                    </IonButton>
-                  </div>
+                <div className="online-available">
+                  <IonIcon icon={people}></IonIcon> 4 Profissionais disponíveis
                 </div>
-              </IonCard>
-            </IonCol>
-          </IonRow>
+              </div>
+
+              <div className="card-rating">
+                <IonButton shape="round" fill="clear" color="danger">
+                  <IonIcon slot="icon-only" icon={heart}></IonIcon>
+                </IonButton>
+              </div>
+            </div>
+          </IonCard>
+
+          <IonCard>
+            <div className="card-wrapper">
+              <div className="card-image"></div>
+
+              <div className="card-content">
+                <div className="title">Old School Barbers</div>
+
+                <div className="details">
+                  <div className="rating">
+                    <IonIcon icon={star}></IonIcon>
+                    4.8
+                  </div>
+
+                  <div>|</div>
+
+                  <div className="category">Barbearia</div>
+
+                  <div>|</div>
+
+                  <div className="distance">2.5 km</div>
+                </div>
+
+                <div className="online-available">
+                  <IonIcon icon={people}></IonIcon> 4 Profissionais disponíveis
+                </div>
+              </div>
+
+              <div className="card-rating">
+                <IonButton shape="round" fill="clear" color="danger">
+                  <IonIcon slot="icon-only" icon={heart}></IonIcon>
+                </IonButton>
+              </div>
+            </div>
+          </IonCard>
         </IonContent>
       </IonPage>
     </>

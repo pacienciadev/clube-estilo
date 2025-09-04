@@ -1,21 +1,21 @@
-import { IonButton, IonIcon } from "@ionic/react";
-
-import { menu } from "ionicons/icons";
-
 import { LogoComponent } from "../Logo";
+import { InitialsAvatar } from "../InitialsAvatar/InitialsAvatar";
+import { useAuth } from "../../contexts/useAuth";
 
 import "./HomeNav.css";
 
-export const HomeNav = ({ onMenuBtnClick }: { onMenuBtnClick: () => void }) => {
+export const HomeNav = () => {
+  const { user } = useAuth();
+
   return (
     <>
       <div className="home-nav ion-padding">
         <LogoComponent size="100px" />
 
-        <IonButton fill="clear" onClick={onMenuBtnClick}>
-          Menu
-          <IonIcon slot="end" icon={menu}></IonIcon>
-        </IonButton>
+        <InitialsAvatar
+          userName={user?.userName || "N a"}
+          avatarImg="https://ionicframework.com/docs/img/demos/avatar.svg"
+        />
       </div>
     </>
   );

@@ -1,6 +1,3 @@
-import { useHistory } from "react-router";
-import { useState } from "react";
-
 import {
   IonButton,
   IonContent,
@@ -10,33 +7,11 @@ import {
   IonList,
   IonMenu,
   IonMenuToggle,
-  IonSpinner,
 } from "@ionic/react";
 
-import { close, logOutOutline } from "ionicons/icons";
-
-import { useAuth } from "../../contexts/useAuth";
+import { close, earth } from "ionicons/icons";
 
 export const SideMenu = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const history = useHistory();
-
-  const { logout } = useAuth();
-
-  const logoutHandler = () => {
-    setIsLoading(true);
-
-    setTimeout(() => {
-      logout();
-
-      // Redireciona para o login
-      history.push("/login", { replace: true });
-
-      setIsLoading(false);
-    }, 2000); // Simulate a network request
-  };
-
   return (
     <IonMenu
       side="end"
@@ -62,19 +37,14 @@ export const SideMenu = () => {
 
         <div>
           <IonList lines="full">
-            {/* <IonItem>
-                <IonLabel>Item exemplo</IonLabel>
-                <IonIcon slot="end" icon={star}></IonIcon>
-              </IonItem> */}
-
-            <IonItem color="danger" onClick={() => logoutHandler()}>
-              <IonLabel>Finalizar sessão</IonLabel>
-
-              {isLoading ? (
-                <IonSpinner slot="end" />
-              ) : (
-                <IonIcon slot="end" icon={logOutOutline}></IonIcon>
-              )}
+            <IonItem>
+              <IonIcon aria-hidden="true" icon={earth} slot="end"></IonIcon>
+              <IonLabel>Termos e Condições</IonLabel>
+            </IonItem>
+            
+            <IonItem>
+              <IonIcon aria-hidden="true" icon={earth} slot="end"></IonIcon>
+              <IonLabel>Políticas de Privacidade</IonLabel>
             </IonItem>
           </IonList>
         </div>

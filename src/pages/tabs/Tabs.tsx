@@ -12,8 +12,14 @@ import { Redirect, Route } from "react-router";
 import { HomeTab } from "./HomeTab";
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
+import { ProfileTab } from "./profile/ProfileTab";
 
-import { ellipse, square, homeOutline } from "ionicons/icons";
+import {
+  bookOutline,
+  homeOutline,
+  locationOutline,
+  personCircleOutline,
+} from "ionicons/icons";
 
 export const TabsPage: React.FC<object> = () => {
   return (
@@ -23,12 +29,16 @@ export const TabsPage: React.FC<object> = () => {
           <HomeTab />
         </Route>
 
-        <Route exact path="/tabs/tab2">
+        <Route exact path="/tabs/map">
           <Tab2 />
         </Route>
 
-        <Route exact path="/tabs/tab3">
+        <Route exact path="/tabs/schedule">
           <Tab3 />
+        </Route>
+
+        <Route exact path="/tabs/profile">
+          <ProfileTab />
         </Route>
 
         <Route exact path="/tabs">
@@ -42,13 +52,18 @@ export const TabsPage: React.FC<object> = () => {
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="tab2" href="/tabs/tab2">
-          <IonIcon icon={ellipse} />
-          <IonLabel>Tab 2</IonLabel>
+        <IonTabButton tab="map-tab" href="/tabs/map">
+          <IonIcon icon={locationOutline} />
+          <IonLabel>Mapa</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="tab3" href="/tabs/tab3">
-          <IonIcon icon={square} />
+        <IonTabButton tab="schedule-tab" href="/tabs/schedule">
+          <IonIcon icon={bookOutline} />
+          <IonLabel>Agenda</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton tab="profile-tab" href="/tabs/profile">
+          <IonIcon icon={personCircleOutline} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>
       </IonTabBar>

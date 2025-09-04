@@ -1,39 +1,26 @@
 declare module "ionicons/icons" {
-  const ellipse: string;
-  const square: string;
-  const homeOutline: string;
-  const lockClosed: string;
-  const logoGoogle: string;
-  const personCircle: string;
-  const enterOutline: string;
-  const menu: string;
-  const close: string;
-  const logOutOutline: string;
-  const star: string;
-  const earth: string;
-  const create: string;
-  const heart: string;
-  const people: string;
-  const options: string;
-  const grid: string;
-
-  export {
-    ellipse,
-    square,
-    homeOutline,
-    lockClosed,
-    logoGoogle,
-    personCircle,
-    enterOutline,
-    menu,
-    close,
-    logOutOutline,
-    star,
-    earth,
-    create,
-    heart,
-    people,
-    options,
-    grid,
-  };
+  export const homeOutline: string;
+  export const lockClosed: string;
+  export const logoGoogle: string;
+  export const personCircle: string;
+  export const enterOutline: string;
+  export const menu: string;
+  export const close: string;
+  export const logOutOutline: string;
+  export const star: string;
+  export const earth: string;
+  export const create: string;
+  export const heart: string;
+  export const people: string;
+  export const options: string;
+  export const grid: string;
+  export const locationOutline: string;
+  export const bookOutline: string;
+  export const personOutline: string;
+  export const createOutline: string;
+  export const personCircleOutline: string;
+  export const cardOutline: string;
+  export const documentTextOutline: string;
+  export const eyeOffOutline: string;
+  export const chatbubbleEllipsesOutline: string;
 }

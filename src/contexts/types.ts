@@ -7,6 +7,7 @@ export interface AuthContextType {
     iat: number;
     exp: number;
   };
+  userCreated: (jwt: string) => void;
   login: (params: {
     email: string;
     password: string;

@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import {
-  IonBackButton,
   IonButton,
-  IonButtons,
   IonCol,
   IonContent,
   IonHeader,
@@ -18,12 +16,15 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import "./UserCreateAddressPage.css";
+import "./WelcomeCreateAddressPage.css";
 
 import { locationOutline } from "ionicons/icons";
-import { createUserAddress } from "../../../services/user/address.service";
+import {
+  createUserAddress,
+  getUserAddress,
+} from "../../../services/user/address.service";
 
-export const UserCreateAddressPage: React.FC = () => {
+export const WelcomeCreateAddressPage: React.FC = () => {
   const [description, setDescription] = useState("");
   const [street, setStreet] = useState("");
   // const [neighborhood, setNeighborhood] = useState("");
@@ -33,6 +34,22 @@ export const UserCreateAddressPage: React.FC = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const addresses = await getUserAddress();
+
+        if (addresses.length > 0) {
+          window.location.href = "/tabs/home";
+        }
+      } catch (error) {
+        console.error("Erro ao buscar o endereço:", error);
+      }
+    };
+
+    fetchAddress();
+  }, []);
 
   useEffect(() => {
     const fetchAddressByZipCode = async () => {
@@ -62,7 +79,7 @@ export const UserCreateAddressPage: React.FC = () => {
     setIsSaving(true);
 
     try {
-      const response = await createUserAddress({
+      await createUserAddress({
         description,
         street,
         number,
@@ -71,7 +88,7 @@ export const UserCreateAddressPage: React.FC = () => {
         state,
         zipCode,
         country: "Brasil",
-        inUse: false,
+        inUse: true,
       });
 
       // Limpar os campos após salvar
@@ -85,9 +102,7 @@ export const UserCreateAddressPage: React.FC = () => {
 
       alert("Endereço salvo com sucesso!");
 
-      console.log("Endereço salvo:", response);
-
-      window.location.href = "/user/address";
+      window.location.href = "/tabs/home";
     } catch (error) {
       console.error("Erro ao salvar endereço:", error);
     } finally {
@@ -95,13 +110,7 @@ export const UserCreateAddressPage: React.FC = () => {
     }
   };
 
-  const enableSaveButton = !(
-    street &&
-    number &&
-    city &&
-    state &&
-    zipCode
-  );
+  const enableSaveButton = !(street && number && city && state && zipCode);
 
   return (
     <IonPage
@@ -113,11 +122,7 @@ export const UserCreateAddressPage: React.FC = () => {
     >
       <IonHeader id="header">
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/user/address"></IonBackButton>
-          </IonButtons>
-
-          <IonTitle>Novo Endereço</IonTitle>
+          <IonTitle>Cadastro de Endereço</IonTitle>
         </IonToolbar>
       </IonHeader>
 

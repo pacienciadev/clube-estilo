@@ -71,6 +71,7 @@ export const UserCreateAddressPage: React.FC = () => {
         state,
         zipCode,
         country: "Brasil",
+        inUse: false,
       });
 
       // Limpar os campos após salvar

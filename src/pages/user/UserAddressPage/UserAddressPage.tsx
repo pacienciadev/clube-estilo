@@ -94,11 +94,14 @@ export const UserAddressPage: React.FC = () => {
                     {!address.description
                       ? `Endereço ${index + 1}`
                       : address.description}{" "}
-                    <small>
-                      <strong>
-                        <IonText color="primary">(Em uso)</IonText>
-                      </strong>
-                    </small>
+                      
+                    {address.inUse && (
+                      <small>
+                        <strong>
+                          <IonText color="primary">(Em uso)</IonText>
+                        </strong>
+                      </small>
+                    )}
                   </IonLabel>
                 </IonItem>
 

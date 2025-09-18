@@ -32,6 +32,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoading(false);
   }, []);
 
+  const userCreated = (jwt: string) => {
+    sessionStorage.setItem("@ACCESS_TOKEN", jwt);
+
+    setUser(jwtDecode(jwt));
+    setIsAuthenticated(true);
+  };
+
   const login = async ({
     email,
     password,
@@ -53,7 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         } else {
           sessionStorage.setItem("@ACCESS_TOKEN", accessToken);
         }
-        
+
         setUser(jwtDecode(accessToken));
         setIsAuthenticated(true);
       })
@@ -75,7 +82,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAuthenticated(false);
   };
 
-  const value = { isAuthenticated, isLoading, user, login, logout };
+  const value = {
+    isAuthenticated,
+    isLoading,
+    user,
+    userCreated,
+    login,
+    logout,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

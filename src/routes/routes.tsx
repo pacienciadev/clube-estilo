@@ -13,6 +13,8 @@ import { UserAddressPage } from "../pages/user/UserAddressPage";
 
 import { useAuth } from "../contexts/useAuth";
 import { UserCreateAddressPage } from "../pages/user/UserCreateAddressPage";
+import { WelcomePage } from "../pages/welcome/Welcome";
+import { WelcomeCreateAddressPage } from "../pages/welcome/WelcomeCreateAddressPage";
 
 export const AppRoutes: React.FC = () => {
   const { isLoading } = useAuth();
@@ -32,6 +34,11 @@ export const AppRoutes: React.FC = () => {
       <PublicRoute path="/register" component={RegisterPage} exact />
 
       <PrivateRoute path="/tabs" component={TabsPage} />
+      <PrivateRoute path="/welcome" component={WelcomePage} />
+      <PrivateRoute
+        path="/welcome/address"
+        component={WelcomeCreateAddressPage}
+      />
       <PrivateRoute path="/user/address" component={UserAddressPage} />
       <PrivateRoute
         path="/user/address/new"

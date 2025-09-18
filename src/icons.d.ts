@@ -26,4 +26,5 @@ declare module "ionicons/icons" {
   export const eyeOffOutline: string;
   export const chatbubbleEllipsesOutline: string;
   export const trashOutline: string;
+  export const arrowForwardOutline: string;
 }

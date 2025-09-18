@@ -136,7 +136,8 @@ export const UserAddressPage: React.FC = () => {
                       <IonButton
                         href={`/user/address/edit/${address.id}`}
                         expand="block"
-                        color="danger"
+                        disabled={address.inUse}
+                        color={address.inUse ? "dark" : "danger"}
                       >
                         Apagar
                         <IonIcon slot="end" icon={trashOutline}></IonIcon>
@@ -157,8 +158,8 @@ export const UserAddressPage: React.FC = () => {
                       <IonButton
                         href={`/user/address/edit/${address.id}`}
                         expand="block"
-                        disabled={true}
-                        color="dark"
+                        disabled={address.inUse}
+                        color={address.inUse ? "dark" : "primary"}
                       >
                         Usar este endereço
                         <IonIcon slot="end" icon={locationOutline}></IonIcon>

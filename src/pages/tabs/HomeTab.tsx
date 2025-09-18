@@ -11,7 +11,15 @@ import {
 
 import { menuController } from "@ionic/core/components";
 
-import { create, earth, heart, star, people, options } from "ionicons/icons";
+import {
+  create,
+  earth,
+  heart,
+  star,
+  people,
+  options,
+  location,
+} from "ionicons/icons";
 
 import { HomeNav } from "../../components/HomeNav";
 import { SideMenu } from "../../components/SideMenu";
@@ -20,8 +28,33 @@ import { CategoryBox } from "../../components/CategoryBox";
 import { useAuth } from "../../contexts/useAuth";
 
 import "./HomeTab.css";
+import { useEffect, useState } from "react";
+import { getUserAddress } from "../../services/user/address.service";
 
 export const HomeTab = () => {
+  const [address, setAddress] = useState<string>("");
+
+  useEffect(() => {
+    const fetchAddress = async () => {
+      try {
+        const addresses = await getUserAddress();
+        const getInUseAddress = addresses.filter(
+          (addr) => addr.inUse === true
+        )[0];
+
+        setAddress(
+          `${getInUseAddress.street}, ${getInUseAddress.number} - ${getInUseAddress.city}`
+        );
+
+        console.log("Endereço em uso:", address);
+      } catch (error) {
+        console.error("Erro ao buscar o endereço:", error);
+      }
+    };
+
+    fetchAddress();
+  }, []);
+
   const { user } = useAuth();
 
   const openSideMenu = async () => {
@@ -40,16 +73,35 @@ export const HomeTab = () => {
             className="ion-align-items-center ion-justify-content-center ion-padding address-text"
             style={{ gap: "10px", backgroundColor: "#2C3E50" }}
           >
-            <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
+            {address ? (
+              <>
+                <IonIcon icon={earth} style={{ fontSize: "20px" }}></IonIcon>
 
-            <IonText>
-              <strong>Endereço não cadastrado</strong>
-            </IonText>
+                <IonText class="address-limit">{address}</IonText>
 
-            <IonButton href="/user/address">
-              cadastrar
-              <IonIcon slot="end" icon={create}></IonIcon>
-            </IonButton>
+                <IonButton
+                  shape="round"
+                  size="small"
+                  color="primary"
+                  href="/user/address"
+                >
+                  <IonIcon icon={location} slot="icon-only"></IonIcon>
+                </IonButton>
+              </>
+            ) : (
+              <>
+                <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
+
+                <IonText>
+                  <strong>Endereço não cadastrado</strong>
+                </IonText>
+
+                <IonButton href="/user/address">
+                  cadastrar
+                  <IonIcon slot="end" icon={create}></IonIcon>
+                </IonButton>
+              </>
+            )}
           </IonRow>
 
           <IonRow className="ion-padding-horizontal">
@@ -57,11 +109,13 @@ export const HomeTab = () => {
               style={{
                 paddingTop: "22px",
                 paddingBottom: "22px",
+                lineHeight: 2,
               }}
             >
-              <h2 className="hello-wrapper">
+              <h4 className="hello-wrapper">
                 Olá <strong>{user?.userName || "N/a"}</strong>,
-              </h2>
+              </h4>
+
               <p
                 style={{
                   margin: 0,

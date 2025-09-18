@@ -9,7 +9,6 @@ import {
   IonHeader,
   IonInput,
   IonInputPasswordToggle,
-  IonList,
   IonPage,
   IonRow,
   IonSpinner,
@@ -23,20 +22,26 @@ import { ToastComponent } from "../../components/Toast";
 import { AuthLogoComponent } from "../../components/AuthLogo";
 
 import "./Register.css";
+import { authService } from "../../services/auth/auth.service";
+import { useAuth } from "../../contexts/useAuth";
+import { useHistory } from "react-router";
 
 export const RegisterPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"alert" | "success">("alert");
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isNameTouched, setIsNameTouched] = useState(false);
   const [isEmailTouched, setIsEmailTouched] = useState(false);
   const [isPasswordTouched, setIsPasswordTouched] = useState(false);
   const [isConfirmPasswordTouched, setIsConfirmPasswordTouched] =
     useState(false);
 
+  const [isValidName, setIsValidName] = useState<boolean>();
   const [isValidEmail, setIsValidEmail] = useState<boolean>();
   const [isValidPassword, setIsValidPassword] = useState<boolean>();
   const [isValidConfirmPassword, setIsValidConfirmPassword] =
@@ -49,11 +54,35 @@ export const RegisterPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isValidEmail && isValidPassword && isValidConfirmPassword)
+    if (
+      isValidName &&
+      isValidEmail &&
+      isValidPassword &&
+      isValidConfirmPassword
+    )
       return setIsDisabled(false);
 
     setIsDisabled(true);
-  }, [isValidEmail, isValidPassword, isValidConfirmPassword]);
+  }, [isValidName, isValidEmail, isValidPassword, isValidConfirmPassword]);
+
+  const validateName = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+\s[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/;
+
+    setIsValidName(undefined);
+
+    if (value === "") return;
+
+    if (nameRegex.test(value)) {
+      setIsValidName(true);
+      setName(value);
+
+      return;
+    }
+
+    setIsValidName(false);
+  };
 
   const validateEmail = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
@@ -112,8 +141,31 @@ export const RegisterPage: React.FC = () => {
     setIsValidConfirmPassword(false);
   };
 
-  const createUserHandler = () => {
+  const { userCreated } = useAuth();
+  const history = useHistory();
+
+  const createUserHandler = async () => {
     setIsLoading(true);
+
+    try {
+      const data = await authService.createAccount({
+        name,
+        email,
+        password
+      });
+
+      userCreated(data.access_token);
+
+      history.push("/welcome");
+    } catch (err) {
+      setToastType("alert");
+      setToastMessage("Erro ao criar usuário.");
+      setIsToastOpened(true);
+
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -121,7 +173,7 @@ export const RegisterPage: React.FC = () => {
       <IonHeader id="header">
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
+            <IonBackButton defaultHref="/"></IonBackButton>
           </IonButtons>
 
           <IonTitle>Nova conta</IonTitle>
@@ -141,7 +193,22 @@ export const RegisterPage: React.FC = () => {
           </IonRow>
         </IonGrid>
 
-        <IonList>
+        <IonGrid>
+          <IonInput
+            className={`
+                ${isValidName && "ion-valid"} 
+                ${!isValidName && "ion-invalid"} 
+                ${isNameTouched && "ion-touched"}
+              `}
+            type="text"
+            label="Nome completo"
+            placeholder="Seu Nome"
+            errorText="O nome é inválido"
+            clearInput={true}
+            onIonInput={(event) => validateName(event)}
+            onIonBlur={() => setIsNameTouched(true)}
+          ></IonInput>
+
           <IonInput
             className={`
                 ${isValidEmail && "ion-valid"} 
@@ -190,7 +257,7 @@ export const RegisterPage: React.FC = () => {
           >
             <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
           </IonInput>
-        </IonList>
+        </IonGrid>
 
         <IonGrid className="ion-padding-vertical"></IonGrid>
 

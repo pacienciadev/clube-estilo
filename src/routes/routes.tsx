@@ -9,8 +9,18 @@ import { LoginPage } from "../pages/auth/Login";
 import { LoginWithPasswordPage } from "../pages/auth/LoginWithPassword";
 import { RegisterPage } from "../pages/auth/Register";
 import { TabsPage } from "../pages/tabs";
+import { UserAddressPage } from "../pages/user/UserAddressPage";
+
+import { useAuth } from "../contexts/useAuth";
+import { UserCreateAddressPage } from "../pages/user/UserCreateAddressPage";
 
 export const AppRoutes: React.FC = () => {
+  const { isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <IonRouterOutlet>
       <PublicRoute path="/login" component={LoginPage} exact />
@@ -22,6 +32,11 @@ export const AppRoutes: React.FC = () => {
       <PublicRoute path="/register" component={RegisterPage} exact />
 
       <PrivateRoute path="/tabs" component={TabsPage} />
+      <PrivateRoute path="/user/address" component={UserAddressPage} />
+      <PrivateRoute
+        path="/user/address/new"
+        component={UserCreateAddressPage}
+      />
 
       <Route exact path="/">
         <Redirect to="/login" />

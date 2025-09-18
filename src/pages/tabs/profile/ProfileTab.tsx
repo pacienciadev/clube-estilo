@@ -135,7 +135,7 @@ export const ProfileTab: React.FC = () => {
             <IonLabel>Favoritos</IonLabel>
           </IonItem>
 
-          <IonItem>
+          <IonItem button href="/user/address">
             <IonIcon
               aria-hidden="true"
               icon={locationOutline}

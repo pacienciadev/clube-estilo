@@ -46,7 +46,7 @@ export const HomeTab = () => {
               <strong>Endereço não cadastrado</strong>
             </IonText>
 
-            <IonButton>
+            <IonButton href="/user/address">
               cadastrar
               <IonIcon slot="end" icon={create}></IonIcon>
             </IonButton>

@@ -1,4 +1,5 @@
 declare module "ionicons/icons" {
+  export const addOutline: string;
   export const homeOutline: string;
   export const lockClosed: string;
   export const logoGoogle: string;
@@ -14,6 +15,7 @@ declare module "ionicons/icons" {
   export const people: string;
   export const options: string;
   export const grid: string;
+  export const location: string;
   export const locationOutline: string;
   export const bookOutline: string;
   export const personOutline: string;
@@ -23,4 +25,5 @@ declare module "ionicons/icons" {
   export const documentTextOutline: string;
   export const eyeOffOutline: string;
   export const chatbubbleEllipsesOutline: string;
+  export const trashOutline: string;
 }

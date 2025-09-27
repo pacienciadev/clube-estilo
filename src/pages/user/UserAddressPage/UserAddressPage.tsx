@@ -29,11 +29,21 @@ import {
   locationOutline,
 } from "ionicons/icons";
 
-import { getUserAddresses } from "../../../services/user/address.service";
+import { getUserAddresses, setDefaultAddress } from "../../../services/user/address.service";
 import { AddressTypes } from "../../../types";
 
 export const UserAddressPage: React.FC = () => {
   const [addressList, setAddressList] = useState<AddressTypes[]>([]);
+
+  const setDefaultAddressHandler = async (id: string) => {
+    try {
+      await setDefaultAddress(id);
+      
+      alert("Endereço definido como padrão com sucesso!");
+    } catch (error) {
+      console.error("Erro ao definir endereço como padrão:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -159,11 +169,13 @@ export const UserAddressPage: React.FC = () => {
 
                     <IonCol>
                       <IonButton
-                        href={`/user/address/edit/${address.id}`}
                         expand="block"
                         fill="clear"
                         disabled={address.inUse}
                         color={address.inUse ? "dark" : "primary"}
+                        onClick={() =>
+                          setDefaultAddressHandler(address.id, address.inUse)
+                        }
                       >
                         {address.inUse
                           ? "Definido como padrão"

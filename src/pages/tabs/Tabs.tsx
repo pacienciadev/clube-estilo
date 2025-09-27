@@ -9,10 +9,8 @@ import {
 
 import { Redirect, Route } from "react-router";
 
-import { HomeTab } from "./HomeTab";
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
-import { ProfileTab } from "./profile/ProfileTab";
 
 import {
   bookOutline,
@@ -20,6 +18,9 @@ import {
   locationOutline,
   personCircleOutline,
 } from "ionicons/icons";
+
+import { HomeTab } from "./home/HomeTab";
+import { ProfileTab } from "./profile/ProfileTab";
 
 export const TabsPage: React.FC<object> = () => {
   return (

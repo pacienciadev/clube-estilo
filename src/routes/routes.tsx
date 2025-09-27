@@ -15,6 +15,7 @@ import { useAuth } from "../contexts/useAuth";
 import { UserCreateAddressPage } from "../pages/user/UserCreateAddressPage";
 import { WelcomePage } from "../pages/welcome/Welcome";
 import { WelcomeCreateAddressPage } from "../pages/welcome/WelcomeCreateAddressPage";
+import { UserUpdateAddressPage } from "../pages/user/UserUpdateAddressPage";
 
 export const AppRoutes: React.FC = () => {
   const { isLoading } = useAuth();
@@ -43,6 +44,10 @@ export const AppRoutes: React.FC = () => {
       <PrivateRoute
         path="/user/address/new"
         component={UserCreateAddressPage}
+      />
+      <PrivateRoute
+        path="/user/address/update/:id"
+        component={UserUpdateAddressPage}
       />
 
       <Route exact path="/">

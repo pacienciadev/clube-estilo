@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 
 import axios from "axios";
 
 import {
+  IonBackButton,
   IonButton,
+  IonButtons,
   IonCol,
   IonContent,
   IonHeader,
@@ -16,15 +18,16 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import "./WelcomeCreateAddressPage.css";
+import "./UserUpdateAddressPage.css";
 
 import { locationOutline } from "ionicons/icons";
 import {
-  createUserAddress,
-  getUserAddresses,
+  updateUserAddress,
+  getUserAddress,
 } from "../../../services/user/address.service";
+import { AddressTypes } from "../../../types";
 
-export const WelcomeCreateAddressPage: React.FC = () => {
+export const UserUpdateAddressPage = (props) => {
   const [description, setDescription] = useState("");
   const [street, setStreet] = useState("");
   // const [neighborhood, setNeighborhood] = useState("");
@@ -34,22 +37,26 @@ export const WelcomeCreateAddressPage: React.FC = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const [inUse, setInUse] = useState(false);
+
+  const params = props.match.params;
 
   useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        const addresses = await getUserAddresses();
-
-        if (addresses.length > 0) {
-          window.location.href = "/tabs/home";
-        }
-      } catch (error) {
-        console.error("Erro ao buscar o endereço:", error);
-      }
+    const fetchUserAddress = (id: string) => {
+      getUserAddress(id).then((address: AddressTypes) => {
+        setDescription(address.description || "");
+        setStreet(address.street || "");
+        setNumber(address.number || "");
+        setComplement(address.complement || "");
+        setCity(address.city || "");
+        setState(address.state || "");
+        setZipCode(address.zipCode || "");
+        setInUse(address.inUse || false);
+      });
     };
 
-    fetchAddress();
-  }, []);
+    fetchUserAddress(params.id);
+  }, [params.id]);
 
   useEffect(() => {
     const fetchAddressByZipCode = async () => {
@@ -75,39 +82,41 @@ export const WelcomeCreateAddressPage: React.FC = () => {
     fetchAddressByZipCode();
   }, [zipCode]);
 
-  const handleSaveAddress = async () => {
+  const handleSaveEditAddress = async () => {
     setIsSaving(true);
 
+    const payload = {
+      description,
+      street,
+      number,
+      complement,
+      city,
+      state,
+      zipCode,
+      country: "Brasil",
+      inUse,
+    };
+
     try {
-      await createUserAddress({
-        description,
-        street,
-        number,
-        complement,
-        city,
-        state,
-        zipCode,
-        country: "Brasil",
-        inUse: true,
-      });
+      await updateUserAddress(params.id, payload);
 
-      // Limpar os campos após salvar
-      setDescription("");
-      setStreet("");
-      setNumber("");
-      setComplement("");
-      setCity("");
-      setState("");
-      setZipCode("");
-
-      alert("Endereço salvo com sucesso!");
-
-      window.location.href = "/tabs/home";
+      alert("Endereço editado e salvo com sucesso!");
     } catch (error) {
-      console.error("Erro ao salvar endereço:", error);
+      console.error("Erro ao editar endereço:", error);
     } finally {
       setIsSaving(false);
     }
+  };
+
+  type SetStateFn = (value: string) => void;
+
+  const handleKeyUp = (
+    event: KeyboardEvent<HTMLIonInputElement>,
+    setState: SetStateFn
+  ) => {
+    const input = event.target as HTMLInputElement;
+
+    setState(input.value);
   };
 
   const enableSaveButton = !(street && number && city && state && zipCode);
@@ -122,7 +131,11 @@ export const WelcomeCreateAddressPage: React.FC = () => {
     >
       <IonHeader id="header">
         <IonToolbar>
-          <IonTitle>Cadastro de Endereço</IonTitle>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/user/address"></IonBackButton>
+          </IonButtons>
+
+          <IonTitle>Editar Endereço</IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -130,7 +143,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
         <IonRow>
           <IonCol size="12" sizeMd="12">
             <IonText color="medium">
-              <p>Preencha os campos abaixo para adicionar um novo endereço.</p>
+              <p>Utilize os campos abaixo para editar o endereço.</p>
             </IonText>
 
             <IonText color="medium">
@@ -144,7 +157,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={description}
-              onIonChange={(e) => setDescription(e.detail.value!)}
+              onKeyUp={(e) => handleKeyUp(e, setDescription)}
               placeholder="Casa, Trabalho, etc."
             >
               <div slot="label">Descrição</div>
@@ -155,7 +168,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={zipCode}
-              onIonChange={(e) => setZipCode(e.detail.value!)}
+              onKeyUp={(e) => handleKeyUp(e, setZipCode)}
               placeholder="00000000"
             >
               <div slot="label">
@@ -168,7 +181,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={street}
-              onIonChange={(e) => setStreet(e.detail.value!)}
+              onKeyUp={(e) => handleKeyUp(e, setStreet)}
               placeholder="Rua Gomes Freire"
             >
               <div slot="label">
@@ -181,6 +194,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={number}
+              onKeyUp={(e) => handleKeyUp(e, setNumber)}
               onIonChange={(e) => setNumber(e.detail.value!)}
               placeholder="123a"
             >
@@ -194,6 +208,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={complement}
+              onKeyUp={(e) => handleKeyUp(e, setComplement)}
               onIonChange={(e) => setComplement(e.detail.value!)}
               placeholder="Apto 123"
             >
@@ -205,6 +220,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={city}
+              onKeyUp={(e) => handleKeyUp(e, setCity)}
               onIonChange={(e) => setCity(e.detail.value!)}
               placeholder="Cidade"
             >
@@ -218,7 +234,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
             <IonInput
               labelPlacement="floating"
               value={state}
-              onIonChange={(e) => setState(e.detail.value!)}
+              onKeyUp={(e) => handleKeyUp(e, setState)}
               placeholder="UF"
             >
               <div slot="label">
@@ -229,7 +245,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
 
           <IonCol size="12" sizeMd="6" className="ion-margin-top">
             <IonButton
-              onClick={handleSaveAddress}
+              onClick={handleSaveEditAddress}
               expand="block"
               disabled={enableSaveButton || isSaving}
             >

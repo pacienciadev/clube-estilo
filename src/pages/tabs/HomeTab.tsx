@@ -29,7 +29,7 @@ import { useAuth } from "../../contexts/useAuth";
 
 import "./HomeTab.css";
 import { useEffect, useState } from "react";
-import { getUserAddress } from "../../services/user/address.service";
+import { getUserAddresses } from "../../services/user/address.service";
 
 export const HomeTab = () => {
   const [address, setAddress] = useState<string>("");
@@ -37,7 +37,7 @@ export const HomeTab = () => {
   useEffect(() => {
     const fetchAddress = async () => {
       try {
-        const addresses = await getUserAddress();
+        const addresses = await getUserAddresses();
         const getInUseAddress = addresses.filter(
           (addr) => addr.inUse === true
         )[0];

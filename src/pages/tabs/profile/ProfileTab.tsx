@@ -43,6 +43,16 @@ export const ProfileTab: React.FC = () => {
 
   const { user, logout } = useAuth();
 
+  const accessGroup = [
+    "USER",
+    "CE_ADMIN",
+    "SERVICE_PROVIDER",
+    "SUPER_ADMIN",
+    "SERVICE_PROVIDER_MANAGER",
+  ];
+
+  const canAccessPartinerArea = accessGroup.includes(user?.affiliation || "");
+
   const logoutHandler = () => {
     setIsLoading(true);
 
@@ -120,7 +130,6 @@ export const ProfileTab: React.FC = () => {
           <IonListHeader>
             <IonLabel>Configurações</IonLabel>
           </IonListHeader>
-
           <IonItem>
             <IonIcon
               aria-hidden="true"
@@ -129,12 +138,10 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Minhas Conversas</IonLabel>
           </IonItem>
-
           <IonItem>
             <IonIcon aria-hidden="true" icon={heart} slot="end"></IonIcon>
             <IonLabel>Favoritos</IonLabel>
           </IonItem>
-
           <IonItem button href="/user/address">
             <IonIcon
               aria-hidden="true"
@@ -143,12 +150,10 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Endereço</IonLabel>
           </IonItem>
-
           <IonItem>
             <IonIcon aria-hidden="true" icon={cardOutline} slot="end"></IonIcon>
             <IonLabel>Formas de pagamento</IonLabel>
           </IonItem>
-
           <IonItem>
             <IonToggle
               checked={isDarkModeChecked}
@@ -159,15 +164,21 @@ export const ProfileTab: React.FC = () => {
               Modo Escuro
             </IonToggle>
           </IonItem>
-
           <IonListHeader>
             <IonLabel>Sobre o App</IonLabel>
           </IonListHeader>
 
-          <IonItem>
-            <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
-            <IonLabel>Quero ser um parceiro</IonLabel>
-          </IonItem>
+          {canAccessPartinerArea ? (
+            <IonItem color="success" button href="/partners">
+              <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
+              <IonLabel>Área do Parceiro</IonLabel>
+            </IonItem>
+          ) : (
+            <IonItem color="primary" button href="/user/partner">
+              <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
+              <IonLabel>Quero ser um parceiro</IonLabel>
+            </IonItem>
+          )}
 
           <IonItem>
             <IonIcon
@@ -177,7 +188,7 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Termos e Condições</IonLabel>
           </IonItem>
-
+          
           <IonItem>
             <IonIcon
               aria-hidden="true"
@@ -186,7 +197,6 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Políticas de Privacidade</IonLabel>
           </IonItem>
-
           <IonItem color="danger" onClick={() => logoutHandler()}>
             <IonLabel>Desconectar conta</IonLabel>
 

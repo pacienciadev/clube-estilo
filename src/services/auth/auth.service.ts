@@ -7,30 +7,31 @@ import {
   UserCredentialsTypes,
 } from "./types";
 
-export const authService = {
-  login: async (credentials: UserCredentialsTypes) => {
-    const response = await useAxios.post<{ access_token: string }>(
-      "/auth/login",
-      credentials
-    );
+export const login = async (credentials: UserCredentialsTypes) => {
+  const response = await useAxios.post<{ access_token: string }>(
+    "/auth/login",
+    credentials
+  );
 
-    return response.data;
-  },
+  return response.data;
+};
 
-  checkToken: async () => {
-    const response = await useAxios.get<CheckTokenResponseTypes>(
-      "/auth/check-token"
-    );
+export const checkToken = async () => {
+  const response = await useAxios.get<CheckTokenResponseTypes>(
+    "/auth/check-token"
+  );
 
-    return response.data;
-  },
+  return response.data;
+};
 
-  createAccount: async (body: CreateUserBodyTypes) => {
-    const response = await useAxios.post<CreateUserResponseTypes>(
-      "/users",
-      body
-    );
+export const getUserList = async () => {
+  const response = await useAxios.get("/users");
 
-    return response.data;
-  },
+  return response.data;
+};
+
+export const createAccount = async (body: CreateUserBodyTypes) => {
+  const response = await useAxios.post<CreateUserResponseTypes>("/users", body);
+
+  return response.data;
 };

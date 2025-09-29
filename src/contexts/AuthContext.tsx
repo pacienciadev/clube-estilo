@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect } from "react";
 
 import { jwtDecode } from "jwt-decode";
 
-import { authService } from "../services/auth/auth.service";
+import { login } from "../services/auth/auth.service";
 
 import { AuthContextType } from "./types";
 
@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAuthenticated(true);
   };
 
-  const login = async ({
+  const loginHandle = async ({
     email,
     password,
     isRememberMeChecked,
@@ -50,8 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }) => {
     setIsLoading(true);
 
-    await authService
-      .login({ email, password })
+    await login({ email, password })
       .then((res) => {
         const { access_token: accessToken } = res;
 
@@ -87,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading,
     user,
     userCreated,
-    login,
+    loginHandle,
     logout,
   };
 

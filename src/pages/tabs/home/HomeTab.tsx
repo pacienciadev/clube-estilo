@@ -11,12 +11,7 @@ import {
 
 import "./HomeTab.css";
 
-
-import {
-  create,
-  earth,
-  location,
-} from "ionicons/icons";
+import { create, earth, location } from "ionicons/icons";
 
 import { HomeNav } from "../../../components/HomeNav";
 import { SideMenu } from "../../../components/SideMenu";
@@ -41,8 +36,6 @@ export const HomeTab = () => {
         setAddress(
           `${getInUseAddress.street}, ${getInUseAddress.number} - ${getInUseAddress.city}`
         );
-
-        console.log("Endereço em uso:", address);
       } catch (error) {
         console.error("Erro ao buscar o endereço:", error);
       }
@@ -53,11 +46,9 @@ export const HomeTab = () => {
 
   const { user } = useAuth();
 
- 
-
   return (
     <>
-      <SideMenu />
+      <SideMenu menuId="side-menu" contentId="main-content" />
 
       <IonPage id="main-content">
         <IonContent fullscreen>
@@ -85,7 +76,6 @@ export const HomeTab = () => {
             ) : (
               <>
                 <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
-
                 <IonText>
                   <strong>Endereço não cadastrado</strong>
                 </IonText>

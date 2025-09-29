@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router";
 
-import { IonRouterOutlet } from "@ionic/react";
+import { IonNav, IonRouterOutlet } from "@ionic/react";
 
 import { PrivateRoute, PublicRoute } from "./components";
 
@@ -16,6 +16,8 @@ import { UserCreateAddressPage } from "../pages/user/UserCreateAddressPage";
 import { WelcomePage } from "../pages/welcome/Welcome";
 import { WelcomeCreateAddressPage } from "../pages/welcome/WelcomeCreateAddressPage";
 import { UserUpdateAddressPage } from "../pages/user/UserUpdateAddressPage";
+import { PartnersPage } from "../pages/partners/Partners";
+import { UserListPage } from "../pages/user/UserListPage";
 
 export const AppRoutes: React.FC = () => {
   const { isLoading } = useAuth();
@@ -48,6 +50,14 @@ export const AppRoutes: React.FC = () => {
       <PrivateRoute
         path="/user/address/update/:id"
         component={UserUpdateAddressPage}
+      />
+      <PrivateRoute
+        path="/partners"
+        component={() => <IonNav root={() => <PartnersPage />} />}
+      />
+      <PrivateRoute
+        path="/partners/admin/users"
+        component={() => <IonNav root={() => <UserListPage />} />}
       />
 
       <Route exact path="/">

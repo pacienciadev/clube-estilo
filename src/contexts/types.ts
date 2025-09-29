@@ -4,11 +4,13 @@ export interface AuthContextType {
   user?: {
     sub: string;
     userName: string;
+    affiliation: string;
+    updatedAt: string;
     iat: number;
     exp: number;
   };
   userCreated: (jwt: string) => void;
-  login: (params: {
+  loginHandle: (params: {
     email: string;
     password: string;
     isRememberMeChecked: boolean;

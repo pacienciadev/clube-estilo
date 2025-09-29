@@ -22,7 +22,8 @@ import { ToastComponent } from "../../components/Toast";
 import { AuthLogoComponent } from "../../components/AuthLogo";
 
 import "./Register.css";
-import { authService } from "../../services/auth/auth.service";
+
+import { createAccount } from "../../services/auth/auth.service";
 import { useAuth } from "../../contexts/useAuth";
 import { useHistory } from "react-router";
 
@@ -148,7 +149,7 @@ export const RegisterPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const data = await authService.createAccount({
+      const data = await createAccount({
         name,
         email,
         password

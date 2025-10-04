@@ -31,7 +31,16 @@ export const getUserList = async () => {
 };
 
 export const createAccount = async (body: CreateUserBodyTypes) => {
-  const response = await useAxios.post<CreateUserResponseTypes>("/users", body);
+  const { cpfValue, ...rest } = body;
+
+  const cpf = cpfValue;
+
+  const payload = { ...rest, cpf };
+
+  const response = await useAxios.post<CreateUserResponseTypes>(
+    "/users",
+    payload
+  );
 
   return response.data;
 };

@@ -1,4 +1,4 @@
-.ion-text-center-icon {
+.text-center-icon {
   text-align: center;
   font-size: 88px;
   display: flex;
@@ -6,7 +6,7 @@
   margin-top: 22px;
 }
 
-.ion-text-center {
+.text-center {
   text-align: center;
   font-size: 30px;
 }

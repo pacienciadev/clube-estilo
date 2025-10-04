@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router";
 
-import { IonNav, IonRouterOutlet } from "@ionic/react";
+import { IonRouterOutlet } from "@ionic/react";
 
 import { PrivateRoute, PublicRoute } from "./components";
 
@@ -28,13 +28,18 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <IonRouterOutlet>
-      <PublicRoute path="/login" component={LoginPage} exact />
+      <PublicRoute
+        path="/login"
+        component={LoginPage}
+      />
       <PublicRoute
         path="/login-with-password"
         component={LoginWithPasswordPage}
-        exact
       />
-      <PublicRoute path="/register" component={RegisterPage} exact />
+      <PublicRoute
+        path="/register"
+        component={RegisterPage}
+      />
 
       <PrivateRoute path="/tabs" component={TabsPage} />
       <PrivateRoute path="/welcome" component={WelcomePage} />
@@ -53,11 +58,11 @@ export const AppRoutes: React.FC = () => {
       />
       <PrivateRoute
         path="/partners"
-        component={() => <IonNav root={() => <PartnersPage />} />}
+        component={PartnersPage}
       />
       <PrivateRoute
         path="/partners/admin/users"
-        component={() => <IonNav root={() => <UserListPage />} />}
+        component={UserListPage}
       />
 
       <Route exact path="/">

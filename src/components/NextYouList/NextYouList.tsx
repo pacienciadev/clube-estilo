@@ -122,11 +122,11 @@ export const NextYouList = ({ partners }: { partners: string[] }) => {
   ) : (
     <>
       <IonRow className="empty-partners-list ion-align-items-center ion-justify-content-center ion-padding-vertical">
-        <IonCol className="ion-text-center-icon" size="12">
+        <IonCol className="text-center-icon" size="12">
           <IonIcon icon={storefrontOutline}></IonIcon>
         </IonCol>
 
-        <IonCol className="ion-text-center" size="12">
+        <IonCol className="text-center" size="12">
           <IonText>Nenhum parceiro encontrado</IonText>
         </IonCol>
       </IonRow>

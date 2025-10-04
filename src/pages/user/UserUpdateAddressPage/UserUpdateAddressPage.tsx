@@ -25,9 +25,16 @@ import {
   updateUserAddress,
   getUserAddress,
 } from "../../../services/user/address.service";
+
 import { AddressTypes } from "../../../types";
 
-export const UserUpdateAddressPage = (props) => {
+import { useParams } from "react-router-dom";
+
+type RouteParams = {
+  id: string;
+};
+
+export const UserUpdateAddressPage: React.FC = () => {
   const [description, setDescription] = useState("");
   const [street, setStreet] = useState("");
   // const [neighborhood, setNeighborhood] = useState("");
@@ -39,7 +46,7 @@ export const UserUpdateAddressPage = (props) => {
   const [isSaving, setIsSaving] = useState(false);
   const [inUse, setInUse] = useState(false);
 
-  const params = props.match.params;
+  const params = useParams<RouteParams>();
 
   useEffect(() => {
     const fetchUserAddress = (id: string) => {

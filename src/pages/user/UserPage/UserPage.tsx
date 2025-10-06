@@ -26,7 +26,7 @@ export const UserPage = ({ user }: { user: UserTypes }) => {
   const { id, name, email, createdAt, updatedAt, affiliation, ...userData } =
     user;
 
-  console.log("%c | id removed:", "background: #000; color: #fff");
+  console.log("%c | id removed:", "background: #000; color: #fff", id);
 
   return (
     <IonPage>

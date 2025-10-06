@@ -19,9 +19,29 @@ import {
 
 import { HomeTab } from "./home/HomeTab";
 import { ProfileTab } from "./profile/ProfileTab";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { UserStatusEnum } from "../../enums";
+import { AccessPendingPage } from "../welcome/AccessPendingPage";
 
 export const TabsPage: React.FC<object> = () => {
-  return (
+  const [status, setStatus] = useState<UserStatusEnum | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@ACCESS_TOKEN");
+
+    if (!token) return;
+
+    const { status: statusTokenRes } = jwtDecode<{ status: UserStatusEnum }>(
+      token
+    );
+
+    setStatus(statusTokenRes);
+  }, []);
+
+  return status === UserStatusEnum.PENDING ? (
+    <AccessPendingPage />
+  ) : (
     <IonTabs>
       <IonTab tab="home-tab">
         <HomeTab />

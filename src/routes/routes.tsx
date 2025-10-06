@@ -9,33 +9,80 @@ import { LoginPage } from "../pages/auth/Login";
 import { LoginWithPasswordPage } from "../pages/auth/LoginWithPassword";
 
 import { useAuth } from "../contexts/useAuth";
+import { UserPartnersPage } from "../pages/user/UserPartnersPage";
 
 // ----------------------------------------------------------------------
 // LAZY IMPORTS (Code Splitting)
 // ----------------------------------------------------------------------
 
 // Auth
-const RegisterPage = lazy(() => import("../pages/auth/Register").then(module => ({ default: module.RegisterPage })));
+const RegisterPage = lazy(() =>
+  import("../pages/auth/Register").then(({ RegisterPage }) => ({
+    default: RegisterPage,
+  }))
+);
 
 // Principais
-const TabsPage = lazy(() => import("../pages/tabs").then(module => ({ default: module.TabsPage })));
-const PartnersPage = lazy(() => import("../pages/partners/Partners").then(module => ({ default: module.PartnersPage })));
+const TabsPage = lazy(() =>
+  import("../pages/tabs").then(({ TabsPage }) => ({ default: TabsPage }))
+);
+
+const PartnersPage = lazy(() =>
+  import("../pages/partners/Partners").then(({ PartnersPage }) => ({
+    default: PartnersPage,
+  }))
+);
 
 // Welcome
-const WelcomePage = lazy(() => import("../pages/welcome/Welcome").then(module => ({ default: module.WelcomePage }))); // <--- CORREÇÃO AQUI
-const WelcomeCreateAddressPage = lazy(() => 
-  import("../pages/welcome/WelcomeCreateAddressPage").then(module => ({ default: module.WelcomeCreateAddressPage }))
+const WelcomePage = lazy(() =>
+  import("../pages/welcome/Welcome").then(({ WelcomePage }) => ({
+    default: WelcomePage,
+  }))
+);
+
+const AccessPendingPage = lazy(() =>
+  import("../pages/welcome/AccessPendingPage").then(
+    ({ AccessPendingPage }) => ({
+      default: AccessPendingPage,
+    })
+  )
+);
+
+const WelcomeCreateAddressPage = lazy(() =>
+  import("../pages/welcome/WelcomeCreateAddressPage").then(
+    ({ WelcomeCreateAddressPage }) => ({
+      default: WelcomeCreateAddressPage,
+    })
+  )
 );
 
 // Usuário & Endereços
-const UserAddressPage = lazy(() => import("../pages/user/UserAddressPage").then(module => ({ default: module.UserAddressPage })));
-const UserCreateAddressPage = lazy(() => 
-  import("../pages/user/UserCreateAddressPage").then(module => ({ default: module.UserCreateAddressPage }))
+const UserAddressPage = lazy(() =>
+  import("../pages/user/UserAddressPage").then(({ UserAddressPage }) => ({
+    default: UserAddressPage,
+  }))
 );
-const UserUpdateAddressPage = lazy(() => 
-  import("../pages/user/UserUpdateAddressPage").then(module => ({ default: module.UserUpdateAddressPage }))
+
+const UserCreateAddressPage = lazy(() =>
+  import("../pages/user/UserCreateAddressPage").then(
+    ({ UserCreateAddressPage }) => ({
+      default: UserCreateAddressPage,
+    })
+  )
 );
-const UserListPage = lazy(() => import("../pages/user/UserListPage").then(module => ({ default: module.UserListPage })));
+
+const UserUpdateAddressPage = lazy(() =>
+  import("../pages/user/UserUpdateAddressPage").then(
+    ({ UserUpdateAddressPage }) => ({
+      default: UserUpdateAddressPage,
+    })
+  )
+);
+const UserListPage = lazy(() =>
+  import("../pages/user/UserListPage").then(({ UserListPage }) => ({
+    default: UserListPage,
+  }))
+);
 
 // ----------------------------------------------------------------------
 // RESTANTE DO CÓDIGO PERMANECE IGUAL
@@ -50,21 +97,19 @@ export const AppRoutes: React.FC = () => {
 
   return (
     <IonRouterOutlet>
-      <PublicRoute
-        path="/login"
-        component={LoginPage}
-      />
+      <PublicRoute path="/login" component={LoginPage} />
       <PublicRoute
         path="/login-with-password"
         component={LoginWithPasswordPage}
       />
-      <PublicRoute
-        path="/register"
-        component={RegisterPage}
-      />
+      <PublicRoute path="/register" component={RegisterPage} />
 
       <PrivateRoute path="/tabs" component={TabsPage} />
       <PrivateRoute path="/welcome" component={WelcomePage} />
+      <PrivateRoute
+        path="/welcome/access-pending"
+        component={AccessPendingPage}
+      />
       <PrivateRoute
         path="/welcome/address"
         component={WelcomeCreateAddressPage}
@@ -78,14 +123,9 @@ export const AppRoutes: React.FC = () => {
         path="/user/address/update/:id"
         component={UserUpdateAddressPage}
       />
-      <PrivateRoute
-        path="/partners"
-        component={PartnersPage}
-      />
-      <PrivateRoute
-        path="/partners/admin/users"
-        component={UserListPage}
-      />
+      <PrivateRoute path="/user/partner" component={UserPartnersPage} />
+      <PrivateRoute path="/partners" component={PartnersPage} />
+      <PrivateRoute path="/partners/admin/users" component={UserListPage} />
 
       <Route exact path="/">
         <Redirect to="/login" />

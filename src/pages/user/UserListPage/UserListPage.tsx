@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   IonAvatar,
   IonBackButton,
+  IonBadge,
   IonButtons,
   IonContent,
   IonHeader,
@@ -26,6 +27,7 @@ import { getUserList } from "../../../services/auth/auth.service";
 import { UserTypes } from "../../../types";
 
 import { UserPage } from "../UserPage";
+import { UserStatusEnum } from "../../../enums";
 
 export const UserListPage: React.FC = () => {
   const [userList, setUserList] = useState<UserTypes[]>([]);
@@ -75,7 +77,37 @@ export const UserListPage: React.FC = () => {
                       />
                     </IonAvatar>
 
-                    <IonLabel class="username-ellipsis">{user.name}</IonLabel>
+                    <IonLabel class="username-ellipsis">{user.name.toUpperCase()}</IonLabel>
+
+                    {user.status === UserStatusEnum.ACTIVE && (
+                      <IonBadge color="success" slot="end">
+                        Ativo
+                      </IonBadge>
+                    )}
+
+                    {user.status === UserStatusEnum.PENDING && (
+                      <IonBadge color="warning" slot="end">
+                        Pendente
+                      </IonBadge>
+                    )}
+
+                    {user.status === UserStatusEnum.INACTIVE && (
+                      <IonBadge color="medium" slot="end">
+                        Inativo
+                      </IonBadge>
+                    )}
+
+                    {user.status === UserStatusEnum.SUSPENDED && (
+                      <IonBadge color="danger" slot="end">
+                        Suspenso
+                      </IonBadge>
+                    )}
+
+                    {user.affiliation === "SUPER_ADMIN" && (
+                      <IonBadge color="primary">SPA</IonBadge>
+                    )}
+
+                    {user.affiliation === "USER" && null}
 
                     <IonIcon slot="end" icon={caretForwardOutline}></IonIcon>
                   </IonItem>

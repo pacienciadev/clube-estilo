@@ -6,6 +6,7 @@ import {
   IonIcon,
   IonPage,
   IonRow,
+  IonText,
   IonToolbar,
 } from "@ionic/react";
 
@@ -34,7 +35,9 @@ export const PartnersPage: React.FC = () => {
               className="ion-padding-horizontal"
               style={{ alignItems: "center" }}
             >
-              <LogoComponent size="64px" />
+              <IonButton fill="clear" routerLink="/">
+                <LogoComponent size="64px" />
+              </IonButton>
             </IonRow>
 
             <IonButtons slot="end">
@@ -47,7 +50,13 @@ export const PartnersPage: React.FC = () => {
         </IonHeader>
 
         <IonContent className="ion-padding">
-          Tap the button in the toolbar to open the menu.
+          <IonText color="primary">
+            <h4>Painel do parceiro Clube Estilo!</h4>
+          </IonText>
+
+          <IonText>
+            <p>Bem-vindo(a)! Use o menu ao lado para navegar entre as opções.</p>
+          </IonText>
         </IonContent>
       </IonPage>
     </>

@@ -1,3 +1,5 @@
+import { UserGenderEnum, UserStatusEnum } from "../enums";
+
 export type AddressTypes = {
   id: string;
   description?: string;
@@ -18,8 +20,9 @@ export type UserTypes = {
   phone: string;
   cpf: string;
   birthDate: string;
-  gender: string;
+  gender: UserGenderEnum;
   affiliation: string;
+  status: UserStatusEnum;
   createdAt: string;
   updatedAt: string;
   deletedAt: string;

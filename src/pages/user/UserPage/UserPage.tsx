@@ -1,6 +1,7 @@
 import {
   IonBackButton,
   IonBadge,
+  IonButton,
   IonButtons,
   IonCard,
   IonCardContent,
@@ -22,15 +23,10 @@ import "./UserPage.css";
 import { UserTypes } from "../../../types";
 
 export const UserPage = ({ user }: { user: UserTypes }) => {
-  const {
-    name,
-    email,
-    createdAt,
-    updatedAt,
-    // deletedAt,
-    affiliation,
-    ...userData
-  } = user;
+  const { id, name, email, createdAt, updatedAt, affiliation, ...userData } =
+    user;
+
+  console.log("%c | id removed:", "background: #000; color: #fff");
 
   return (
     <IonPage>
@@ -57,9 +53,27 @@ export const UserPage = ({ user }: { user: UserTypes }) => {
           </IonCardHeader>
 
           <IonCardContent>
-            <IonBadge color="warning">
-              {affiliation || <IonText color="warning">N/a</IonText>}
-            </IonBadge>
+            <IonRow className="ion-align-items-center ion-justify-content-between">
+              <IonCol size="8">
+                <IonText color="primary">
+                  <h2>Informações</h2>
+                </IonText>
+              </IonCol>
+
+              <IonCol size="4">
+                <IonButton expand="full" color="primary">
+                  Editar
+                </IonButton>
+              </IonCol>
+
+              <IonCol size="12">
+                {affiliation === "SUPER_ADMIN" && (
+                  <IonBadge color="warning">SP Admin</IonBadge>
+                )}
+
+                {affiliation === "USER" && null}
+              </IonCol>
+            </IonRow>
 
             <IonRow>
               {Object.entries(userData).map(([key, value]) => (

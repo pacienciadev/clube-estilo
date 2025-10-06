@@ -11,6 +11,7 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonNavLink,
   IonPage,
   IonRow,
   IonSpinner,
@@ -34,6 +35,8 @@ import {
 } from "ionicons/icons";
 
 import "./ProfileTab.css";
+import { UserPartnersPage } from "../../user/UserPartnersPage";
+import { UserAddressPage } from "../../user/UserAddressPage";
 
 export const ProfileTab: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -141,14 +144,21 @@ export const ProfileTab: React.FC = () => {
             <IonIcon aria-hidden="true" icon={heart} slot="end"></IonIcon>
             <IonLabel>Favoritos</IonLabel>
           </IonItem>
-          <IonItem button href="/user/address">
-            <IonIcon
-              aria-hidden="true"
-              icon={locationOutline}
-              slot="end"
-            ></IonIcon>
-            <IonLabel>Endereço</IonLabel>
-          </IonItem>
+          
+          <IonNavLink
+            routerDirection="forward"
+            component={() => <UserAddressPage />}
+          >
+            <IonItem button>
+              <IonIcon
+                aria-hidden="true"
+                icon={locationOutline}
+                slot="end"
+              ></IonIcon>
+              <IonLabel>Endereço</IonLabel>
+            </IonItem>
+          </IonNavLink>
+
           <IonItem>
             <IonIcon aria-hidden="true" icon={cardOutline} slot="end"></IonIcon>
             <IonLabel>Formas de pagamento</IonLabel>
@@ -167,16 +177,21 @@ export const ProfileTab: React.FC = () => {
             <IonLabel>Sobre o App</IonLabel>
           </IonListHeader>
 
-          {canAccessPartinerArea ? (
+          {canAccessPartnerArea ? (
             <IonItem color="success" button href="/partners">
               <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
               <IonLabel>Área do Parceiro</IonLabel>
             </IonItem>
           ) : (
-            <IonItem color="primary" button href="/user/partner">
-              <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
-              <IonLabel>Quero ser um parceiro</IonLabel>
-            </IonItem>
+            <IonNavLink
+              routerDirection="forward"
+              component={() => <UserPartnersPage />}
+            >
+              <IonItem color="primary" button>
+                <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
+                <IonLabel>Quero ser um parceiro</IonLabel>
+              </IonItem>
+            </IonNavLink>
           )}
 
           <IonItem>
@@ -187,7 +202,7 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Termos e Condições</IonLabel>
           </IonItem>
-          
+
           <IonItem>
             <IonIcon
               aria-hidden="true"

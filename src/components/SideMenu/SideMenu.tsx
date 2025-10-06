@@ -11,14 +11,15 @@ import {
 
 import { close, earth } from "ionicons/icons";
 
-export const SideMenu = () => {
+export const SideMenu = ({
+  menuId,
+  contentId,
+}: {
+  menuId: string;
+  contentId: string;
+}) => {
   return (
-    <IonMenu
-      side="end"
-      type="reveal"
-      menuId="side-menu"
-      contentId="main-content"
-    >
+    <IonMenu side="end" type="reveal" menuId={menuId} contentId={contentId}>
       <IonContent>
         <div
           style={{
@@ -41,7 +42,7 @@ export const SideMenu = () => {
               <IonIcon aria-hidden="true" icon={earth} slot="end"></IonIcon>
               <IonLabel>Termos e Condições</IonLabel>
             </IonItem>
-            
+
             <IonItem>
               <IonIcon aria-hidden="true" icon={earth} slot="end"></IonIcon>
               <IonLabel>Políticas de Privacidade</IonLabel>

@@ -1,0 +1,16 @@
+.text-center-icon {
+  text-align: center;
+  font-size: 88px;
+  display: flex;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.text-center {
+  text-align: center;
+  font-size: 30px;
+}
+
+.empty-partners-list {
+  opacity: 0.3;
+}

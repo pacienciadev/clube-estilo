@@ -1,18 +1,14 @@
 import {
   IonIcon,
   IonLabel,
-  IonRouterOutlet,
+  IonTab,
   IonTabBar,
   IonTabButton,
   IonTabs,
 } from "@ionic/react";
 
-import { Redirect, Route } from "react-router";
-
-import { HomeTab } from "./HomeTab";
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
-import { ProfileTab } from "./profile/ProfileTab";
 
 import {
   bookOutline,
@@ -21,48 +17,65 @@ import {
   personCircleOutline,
 } from "ionicons/icons";
 
+import { HomeTab } from "./home/HomeTab";
+import { ProfileTab } from "./profile/ProfileTab";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { UserStatusEnum } from "../../enums";
+import { AccessPendingPage } from "../welcome/AccessPendingPage";
+
 export const TabsPage: React.FC<object> = () => {
-  return (
+  const [status, setStatus] = useState<UserStatusEnum | null>(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("@ACCESS_TOKEN");
+
+    if (!token) return;
+
+    const { status: statusTokenRes } = jwtDecode<{ status: UserStatusEnum }>(
+      token
+    );
+
+    setStatus(statusTokenRes);
+  }, []);
+
+  return status === UserStatusEnum.PENDING ? (
+    <AccessPendingPage />
+  ) : (
     <IonTabs>
-      <IonRouterOutlet>
-        <Route exact path="/tabs/home">
-          <HomeTab />
-        </Route>
+      <IonTab tab="home-tab">
+        <HomeTab />
+      </IonTab>
 
-        <Route exact path="/tabs/map">
-          <Tab2 />
-        </Route>
+      <IonTab tab="map-tab">
+        <Tab2 />
+      </IonTab>
 
-        <Route exact path="/tabs/schedule">
-          <Tab3 />
-        </Route>
+      <IonTab tab="schedule-tab">
+        <Tab3 />
+      </IonTab>
 
-        <Route exact path="/tabs/profile">
-          <ProfileTab />
-        </Route>
-
-        <Route exact path="/tabs">
-          <Redirect to="/tabs/home" />
-        </Route>
-      </IonRouterOutlet>
+      <IonTab tab="profile-tab">
+        <ProfileTab />
+      </IonTab>
 
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home-tab" href="/tabs/home">
+        <IonTabButton tab="home-tab">
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="map-tab" href="/tabs/map">
+        <IonTabButton tab="map-tab">
           <IonIcon icon={locationOutline} />
           <IonLabel>Mapa</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="schedule-tab" href="/tabs/schedule">
+        <IonTabButton tab="schedule-tab">
           <IonIcon icon={bookOutline} />
           <IonLabel>Agenda</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="profile-tab" href="/tabs/profile">
+        <IonTabButton tab="profile-tab">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>

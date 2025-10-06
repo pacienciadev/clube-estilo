@@ -11,6 +11,7 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonNavLink,
   IonPage,
   IonRow,
   IonSpinner,
@@ -34,6 +35,8 @@ import {
 } from "ionicons/icons";
 
 import "./ProfileTab.css";
+import { UserPartnersPage } from "../../user/UserPartnersPage";
+import { UserAddressPage } from "../../user/UserAddressPage";
 
 export const ProfileTab: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +45,15 @@ export const ProfileTab: React.FC = () => {
   const history = useHistory();
 
   const { user, logout } = useAuth();
+
+  const accessGroup = [
+    "SUPER_ADMIN",
+    "CE_ADMIN",
+    "SERVICE_PROVIDER",
+    "SERVICE_PROVIDER_MANAGER",
+  ];
+
+  const canAccessPartnerArea = accessGroup.includes(user?.affiliation || "");
 
   const logoutHandler = () => {
     setIsLoading(true);
@@ -120,7 +132,6 @@ export const ProfileTab: React.FC = () => {
           <IonListHeader>
             <IonLabel>Configurações</IonLabel>
           </IonListHeader>
-
           <IonItem>
             <IonIcon
               aria-hidden="true"
@@ -129,26 +140,29 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Minhas Conversas</IonLabel>
           </IonItem>
-
           <IonItem>
             <IonIcon aria-hidden="true" icon={heart} slot="end"></IonIcon>
             <IonLabel>Favoritos</IonLabel>
           </IonItem>
-
-          <IonItem button href="/user/address">
-            <IonIcon
-              aria-hidden="true"
-              icon={locationOutline}
-              slot="end"
-            ></IonIcon>
-            <IonLabel>Endereço</IonLabel>
-          </IonItem>
+          
+          <IonNavLink
+            routerDirection="forward"
+            component={() => <UserAddressPage />}
+          >
+            <IonItem button>
+              <IonIcon
+                aria-hidden="true"
+                icon={locationOutline}
+                slot="end"
+              ></IonIcon>
+              <IonLabel>Endereço</IonLabel>
+            </IonItem>
+          </IonNavLink>
 
           <IonItem>
             <IonIcon aria-hidden="true" icon={cardOutline} slot="end"></IonIcon>
             <IonLabel>Formas de pagamento</IonLabel>
           </IonItem>
-
           <IonItem>
             <IonToggle
               checked={isDarkModeChecked}
@@ -159,15 +173,26 @@ export const ProfileTab: React.FC = () => {
               Modo Escuro
             </IonToggle>
           </IonItem>
-
           <IonListHeader>
             <IonLabel>Sobre o App</IonLabel>
           </IonListHeader>
 
-          <IonItem>
-            <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
-            <IonLabel>Quero ser um parceiro</IonLabel>
-          </IonItem>
+          {canAccessPartnerArea ? (
+            <IonItem color="success" button href="/partners">
+              <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
+              <IonLabel>Área do Parceiro</IonLabel>
+            </IonItem>
+          ) : (
+            <IonNavLink
+              routerDirection="forward"
+              component={() => <UserPartnersPage />}
+            >
+              <IonItem color="primary" button>
+                <IonIcon aria-hidden="true" icon={star} slot="end"></IonIcon>
+                <IonLabel>Quero ser um parceiro</IonLabel>
+              </IonItem>
+            </IonNavLink>
+          )}
 
           <IonItem>
             <IonIcon
@@ -186,7 +211,6 @@ export const ProfileTab: React.FC = () => {
             ></IonIcon>
             <IonLabel>Políticas de Privacidade</IonLabel>
           </IonItem>
-
           <IonItem color="danger" onClick={() => logoutHandler()}>
             <IonLabel>Desconectar conta</IonLabel>
 

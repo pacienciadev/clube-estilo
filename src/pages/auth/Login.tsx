@@ -4,16 +4,20 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
+  IonNavLink,
   IonPage,
   IonRow,
   IonText,
 } from "@ionic/react";
 
+import "./Login.css";
+
 import { lockClosed, personCircle } from "ionicons/icons";
 
 import { AuthLogoComponent } from "../../components/AuthLogo";
 
-import "./Login.css";
+import { LoginWithPasswordPage } from "./LoginWithPassword";
+import { RegisterPage } from "./Register";
 
 export const LoginPage: React.FC = () => {
   return (
@@ -39,31 +43,37 @@ export const LoginPage: React.FC = () => {
 
         <IonCol class="ion-padding"></IonCol>
 
-        <IonButton
-          expand="block"
-          routerLink="/login-with-password"
+        <IonNavLink
           routerDirection="forward"
+          component={() => <LoginWithPasswordPage />}
         >
-          <IonIcon
-            slot="start"
-            icon={lockClosed}
-            className="ion-align-self-start"
-          ></IonIcon>
+          <IonButton expand="block">
+            <IonIcon
+              slot="start"
+              icon={lockClosed}
+              className="ion-align-self-start"
+            ></IonIcon>
 
-          <IonText>Entrar com o E-mail e Senha</IonText>
-        </IonButton>
+            <IonText>Entrar com o E-mail e Senha</IonText>
+          </IonButton>
+        </IonNavLink>
 
         <IonCol class="ion-padding"></IonCol>
 
-        <IonButton fill="clear" expand="block" routerLink="/register">
-          <IonIcon
-            slot="start"
-            icon={personCircle}
-            className="ion-align-self-start"
-          ></IonIcon>
+        <IonNavLink
+          routerDirection="forward"
+          component={() => <RegisterPage />}
+        >
+          <IonButton fill="clear" expand="block">
+            <IonIcon
+              slot="start"
+              icon={personCircle}
+              className="ion-align-self-start"
+            ></IonIcon>
 
-          <IonText>Criar nova conta</IonText>
-        </IonButton>
+            <IonText>Criar nova conta</IonText>
+          </IonButton>
+        </IonNavLink>
       </IonContent>
     </IonPage>
   );

@@ -13,6 +13,7 @@ import {
   IonIcon,
   IonInput,
   IonInputPasswordToggle,
+  IonNavLink,
   IonPage,
   IonRow,
   IonSpinner,
@@ -21,7 +22,9 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { enterOutline, personCircle } from "ionicons/icons";
+import "./LoginWithPassword.css";
+
+import { enterOutline, personCircle, arrowBackOutline } from "ionicons/icons";
 
 import { validateEmail, validatePassword } from "../../utils";
 
@@ -30,7 +33,8 @@ import { ToastComponent } from "../../components/Toast";
 
 import { useAuth } from "../../contexts/useAuth";
 
-import "./LoginWithPassword.css";
+import { RegisterPage } from "./Register";
+import { LoginPage } from "./Login";
 
 export const LoginWithPasswordPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
@@ -81,12 +85,12 @@ export const LoginWithPasswordPage: React.FC = () => {
 
   const history = useHistory();
 
-  const { login } = useAuth();
+  const { loginHandle } = useAuth();
 
-  const loginHandler = () => {
+  const loginBtnHandler = () => {
     setIsLoading(true);
 
-    login({ email, password, isRememberMeChecked })
+    loginHandle({ email, password, isRememberMeChecked })
       .then(() => {
         history.push("/tabs/home");
       })
@@ -179,7 +183,7 @@ export const LoginWithPasswordPage: React.FC = () => {
           <IonButton
             expand="block"
             disabled={isDisabled}
-            onClick={loginHandler}
+            onClick={loginBtnHandler}
           >
             Login
             <IonIcon slot="end" icon={enterOutline}></IonIcon>
@@ -198,15 +202,29 @@ export const LoginWithPasswordPage: React.FC = () => {
 
         <IonCol class="ion-padding"></IonCol>
 
-        <IonButton fill="clear" expand="block" routerLink="/register">
-          <IonIcon
-            slot="start"
-            icon={personCircle}
-            className="ion-align-self-start"
-          ></IonIcon>
+        <IonNavLink
+          routerDirection="forward"
+          component={() => <RegisterPage />}
+        >
+          <IonButton fill="clear" expand="block">
+            <IonIcon
+              slot="start"
+              icon={personCircle}
+              className="ion-align-self-start"
+            ></IonIcon>
 
-          <IonText>Criar nova conta</IonText>
-        </IonButton>
+            <IonText>Criar nova conta</IonText>
+          </IonButton>
+        </IonNavLink>
+
+        <IonCol class="ion-padding"></IonCol>
+
+        <IonNavLink routerDirection="back" component={() => <LoginPage />}>
+          <IonButton expand="block" fill="clear">
+            <IonIcon slot="start" icon={arrowBackOutline} />
+            Voltar
+          </IonButton>
+        </IonNavLink>
       </IonContent>
 
       <ToastComponent
@@ -218,4 +236,3 @@ export const LoginWithPasswordPage: React.FC = () => {
     </IonPage>
   );
 };
-

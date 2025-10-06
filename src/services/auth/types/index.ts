@@ -17,6 +17,10 @@ export type CreateUserBodyTypes = {
   name: string;
   email: string;
   password: string;
+  cpfValue: string;
+  phone: string;
+  birthDate: string;
+  gender: string;
 };
 
 export type CreateUserResponseTypes = {

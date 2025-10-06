@@ -1,5 +1,6 @@
 // src/components/PublicRoute.tsx
 import React from "react";
+import { IonNav } from "@ionic/react";
 import { Route, Redirect } from "react-router-dom";
 
 import { useAuth } from "../../contexts/useAuth";
@@ -17,7 +18,7 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({
       {...rest}
       render={(props) =>
         !isAuthenticated ? (
-          <Component {...props} />
+          <IonNav root={() => <Component {...props} />} />
         ) : (
           <Redirect to="/tabs/home" />
         )

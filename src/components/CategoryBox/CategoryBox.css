@@ -20,3 +20,18 @@
   font-size: 12px;
   text-align: center;
 }
+
+.category-box-empty {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px dashed #00000050;
+}
+
+.empty-title-box {
+  color: #00000050;
+  font-size: 18px;
+  text-align: center;
+  font-weight: 600;
+}

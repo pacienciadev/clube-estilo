@@ -29,16 +29,29 @@ import {
   locationOutline,
 } from "ionicons/icons";
 
-import { getUserAddress } from "../../../services/user/address.service";
+import {
+  getUserAddresses,
+  setDefaultAddress,
+} from "../../../services/user/address.service";
 import { AddressTypes } from "../../../types";
 
 export const UserAddressPage: React.FC = () => {
   const [addressList, setAddressList] = useState<AddressTypes[]>([]);
 
+  const setDefaultAddressHandler = async (id: string) => {
+    try {
+      await setDefaultAddress(id);
+
+      alert("Endereço definido como padrão com sucesso!");
+    } catch (error) {
+      console.error("Erro ao definir endereço como padrão:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchAddress = async () => {
       try {
-        const addresses = await getUserAddress();
+        const addresses = await getUserAddresses();
 
         setAddressList(addresses);
       } catch (error) {
@@ -94,7 +107,6 @@ export const UserAddressPage: React.FC = () => {
                     {!address.description
                       ? `Endereço ${index + 1}`
                       : address.description}{" "}
-                      
                     {address.inUse && (
                       <small>
                         <strong>
@@ -137,7 +149,7 @@ export const UserAddressPage: React.FC = () => {
                   <IonRow className="ion-margin-top">
                     <IonCol>
                       <IonButton
-                        href={`/user/address/edit/${address.id}`}
+                        onClick={() => alert(`id: ${address.id}`)}
                         expand="block"
                         disabled={address.inUse}
                         color={address.inUse ? "dark" : "danger"}
@@ -149,8 +161,9 @@ export const UserAddressPage: React.FC = () => {
 
                     <IonCol>
                       <IonButton
-                        href={`/user/address/edit/${address.id}`}
+                        href={`/user/address/update/${address.id}`}
                         expand="block"
+                        color="warning"
                       >
                         Editar
                         <IonIcon slot="end" icon={createOutline}></IonIcon>
@@ -159,12 +172,16 @@ export const UserAddressPage: React.FC = () => {
 
                     <IonCol>
                       <IonButton
-                        href={`/user/address/edit/${address.id}`}
                         expand="block"
+                        fill="clear"
                         disabled={address.inUse}
                         color={address.inUse ? "dark" : "primary"}
+                        onClick={() => setDefaultAddressHandler(address.id)}
                       >
-                        Usar este endereço
+                        {address.inUse
+                          ? "Definido como padrão"
+                          : "Usar este endereço"}
+
                         <IonIcon slot="end" icon={locationOutline}></IonIcon>
                       </IonButton>
                     </IonCol>

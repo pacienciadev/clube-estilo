@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../../contexts/useAuth";
 
 import { PrivateRouteProps } from "./types";
+import { IonNav } from "@ionic/react";
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
@@ -16,7 +17,11 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+        isAuthenticated ? (
+          <IonNav root={() => <Component {...props} />} />
+        ) : (
+          <Redirect to="/login" />
+        )
       }
     />
   );

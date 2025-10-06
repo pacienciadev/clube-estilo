@@ -21,7 +21,7 @@ import "./WelcomeCreateAddressPage.css";
 import { locationOutline } from "ionicons/icons";
 import {
   createUserAddress,
-  getUserAddress,
+  getUserAddresses,
 } from "../../../services/user/address.service";
 
 export const WelcomeCreateAddressPage: React.FC = () => {
@@ -38,7 +38,7 @@ export const WelcomeCreateAddressPage: React.FC = () => {
   useEffect(() => {
     const fetchAddress = async () => {
       try {
-        const addresses = await getUserAddress();
+        const addresses = await getUserAddresses();
 
         if (addresses.length > 0) {
           window.location.href = "/tabs/home";

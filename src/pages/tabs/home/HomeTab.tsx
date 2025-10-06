@@ -111,7 +111,6 @@ export const HomeTab = () => {
           </IonRow>
 
           <CategoryBox
-            // categories={["Barbearia", "Cabeleireiro", "Manicure", "Estética"]}
             categories={[]}
           />
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Redirect, Route } from "react-router";
 
 import { IonRouterOutlet } from "@ionic/react";
@@ -7,17 +7,39 @@ import { PrivateRoute, PublicRoute } from "./components";
 
 import { LoginPage } from "../pages/auth/Login";
 import { LoginWithPasswordPage } from "../pages/auth/LoginWithPassword";
-import { RegisterPage } from "../pages/auth/Register";
-import { TabsPage } from "../pages/tabs";
-import { UserAddressPage } from "../pages/user/UserAddressPage";
 
 import { useAuth } from "../contexts/useAuth";
-import { UserCreateAddressPage } from "../pages/user/UserCreateAddressPage";
-import { WelcomePage } from "../pages/welcome/Welcome";
-import { WelcomeCreateAddressPage } from "../pages/welcome/WelcomeCreateAddressPage";
-import { UserUpdateAddressPage } from "../pages/user/UserUpdateAddressPage";
-import { PartnersPage } from "../pages/partners/Partners";
-import { UserListPage } from "../pages/user/UserListPage";
+
+// ----------------------------------------------------------------------
+// LAZY IMPORTS (Code Splitting)
+// ----------------------------------------------------------------------
+
+// Auth
+const RegisterPage = lazy(() => import("../pages/auth/Register").then(module => ({ default: module.RegisterPage })));
+
+// Principais
+const TabsPage = lazy(() => import("../pages/tabs").then(module => ({ default: module.TabsPage })));
+const PartnersPage = lazy(() => import("../pages/partners/Partners").then(module => ({ default: module.PartnersPage })));
+
+// Welcome
+const WelcomePage = lazy(() => import("../pages/welcome/Welcome").then(module => ({ default: module.WelcomePage }))); // <--- CORREÇÃO AQUI
+const WelcomeCreateAddressPage = lazy(() => 
+  import("../pages/welcome/WelcomeCreateAddressPage").then(module => ({ default: module.WelcomeCreateAddressPage }))
+);
+
+// Usuário & Endereços
+const UserAddressPage = lazy(() => import("../pages/user/UserAddressPage").then(module => ({ default: module.UserAddressPage })));
+const UserCreateAddressPage = lazy(() => 
+  import("../pages/user/UserCreateAddressPage").then(module => ({ default: module.UserCreateAddressPage }))
+);
+const UserUpdateAddressPage = lazy(() => 
+  import("../pages/user/UserUpdateAddressPage").then(module => ({ default: module.UserUpdateAddressPage }))
+);
+const UserListPage = lazy(() => import("../pages/user/UserListPage").then(module => ({ default: module.UserListPage })));
+
+// ----------------------------------------------------------------------
+// RESTANTE DO CÓDIGO PERMANECE IGUAL
+// ----------------------------------------------------------------------
 
 export const AppRoutes: React.FC = () => {
   const { isLoading } = useAuth();

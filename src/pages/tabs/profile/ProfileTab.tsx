@@ -44,10 +44,9 @@ export const ProfileTab: React.FC = () => {
   const { user, logout } = useAuth();
 
   const accessGroup = [
-    "USER",
+    "SUPER_ADMIN",
     "CE_ADMIN",
     "SERVICE_PROVIDER",
-    "SUPER_ADMIN",
     "SERVICE_PROVIDER_MANAGER",
   ];
 

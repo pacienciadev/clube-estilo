@@ -1,13 +1,11 @@
 import {
   IonIcon,
   IonLabel,
-  IonRouterOutlet,
+  IonTab,
   IonTabBar,
   IonTabButton,
   IonTabs,
 } from "@ionic/react";
-
-import { Redirect, Route } from "react-router";
 
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
@@ -25,45 +23,39 @@ import { ProfileTab } from "./profile/ProfileTab";
 export const TabsPage: React.FC<object> = () => {
   return (
     <IonTabs>
-      <IonRouterOutlet>
-        <Route exact path="/tabs/home">
-          <HomeTab />
-        </Route>
+      <IonTab tab="home-tab">
+        <HomeTab />
+      </IonTab>
 
-        <Route exact path="/tabs/map">
-          <Tab2 />
-        </Route>
+      <IonTab tab="map-tab">
+        <Tab2 />
+      </IonTab>
 
-        <Route exact path="/tabs/schedule">
-          <Tab3 />
-        </Route>
+      <IonTab tab="schedule-tab">
+        <Tab3 />
+      </IonTab>
 
-        <Route exact path="/tabs/profile">
-          <ProfileTab />
-        </Route>
-
-        <Route exact path="/tabs">
-          <Redirect to="/tabs/home" />
-        </Route>
-      </IonRouterOutlet>
+      <IonTab tab="profile-tab">
+        <ProfileTab />
+      </IonTab>
 
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home-tab" href="/tabs/home">
+        <IonTabButton tab="home-tab">
           <IonIcon icon={homeOutline} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="map-tab" href="/tabs/map">
+        <IonTabButton tab="map-tab">
           <IonIcon icon={locationOutline} />
           <IonLabel>Mapa</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="schedule-tab" href="/tabs/schedule">
+        <IonTabButton tab="schedule-tab">
           <IonIcon icon={bookOutline} />
           <IonLabel>Agenda</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="profile-tab" href="/tabs/profile">
+        <IonTabButton tab="profile-tab">
           <IonIcon icon={personCircleOutline} />
           <IonLabel>Perfil</IonLabel>
         </IonTabButton>

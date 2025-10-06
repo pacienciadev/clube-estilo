@@ -50,7 +50,7 @@ export const ProfileTab: React.FC = () => {
     "SERVICE_PROVIDER_MANAGER",
   ];
 
-  const canAccessPartinerArea = accessGroup.includes(user?.affiliation || "");
+  const canAccessPartnerArea = accessGroup.includes(user?.affiliation || "");
 
   const logoutHandler = () => {
     setIsLoading(true);

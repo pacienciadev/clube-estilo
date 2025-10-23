@@ -22,6 +22,8 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
+import { jwtDecode } from "jwt-decode";
+
 import "./LoginWithPassword.css";
 
 import { enterOutline, personCircle, arrowBackOutline } from "ionicons/icons";
@@ -33,8 +35,12 @@ import { ToastComponent } from "../../components/Toast";
 
 import { useAuth } from "../../contexts/useAuth";
 
+import { login } from "../../services/auth/auth.service";
+
 import { RegisterPage } from "./Register";
 import { LoginPage } from "./Login";
+
+import { AxiosError } from "axios";
 
 export const LoginWithPasswordPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
@@ -85,23 +91,44 @@ export const LoginWithPasswordPage: React.FC = () => {
 
   const history = useHistory();
 
-  const { loginHandle } = useAuth();
+  const { setUser, setIsAuthenticated } = useAuth();
 
   const loginBtnHandler = () => {
     setIsLoading(true);
 
-    loginHandle({ email, password, isRememberMeChecked })
-      .then(() => {
-        history.push("/tabs/home");
+    login({ email, password })
+      .then((res) => {
+        const { access_token } = res;
+
+        if (isRememberMeChecked) {
+          localStorage.setItem("@ACCESS_TOKEN", access_token);
+        } else {
+          sessionStorage.setItem("@ACCESS_TOKEN", access_token);
+        }
+
+        setUser(jwtDecode(access_token));
+        setIsAuthenticated(true);
+
+        successToast("Login realizado com sucesso!");
+
+        setTimeout(() => {
+          history.push("/tabs/home");
+        }, 4000);
       })
-      .catch((error: string) => {
-        setToastMessage(error);
+      .catch((error: AxiosError<{ message: string }>) => {
         setToastType("alert");
+        setToastMessage(error.response?.data?.message || "Erro desconhecido");
         setIsToastOpened(true);
       })
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  const successToast = (message: string) => {
+    setToastType("success");
+    setToastMessage(message);
+    setIsToastOpened(true);
   };
 
   return (

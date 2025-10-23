@@ -38,14 +38,14 @@ export const AccessPendingPage: React.FC = () => {
           style={{ lineHeight: "8px" }}
         >
           <IonCol size="12" className="ion-text-center">
-            <IonText class="ion-text-center ion-padding ion-margin">
-              Seu cadastro está em análise,
+            <IonText class="ion-text-center ion-margin">
+              Seu cadastro está em análise 🔎
             </IonText>
           </IonCol>
 
           <IonCol size="12" className="ion-text-center">
-            <IonText class="ion-text-center ion-padding ion-margin">
-              ele será aprovado em breve.
+            <IonText class="ion-margin">
+              ele será aprovado <strong>em breve</strong>.
             </IonText>
           </IonCol>
         </IonRow>

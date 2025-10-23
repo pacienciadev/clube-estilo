@@ -33,17 +33,9 @@ export const UserListPage: React.FC = () => {
   const [userList, setUserList] = useState<UserTypes[]>([]);
 
   useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        const { users } = await getUserList();
+    const fetchAddress = async () => await getUserList();
 
-        setUserList(users);
-      } catch (error) {
-        console.error("Erro ao buscar usuários: ", error);
-      }
-    };
-
-    fetchAddress();
+    fetchAddress().then((users) => setUserList(users));
   }, []);
 
   return (
@@ -61,7 +53,7 @@ export const UserListPage: React.FC = () => {
       <IonContent>
         <IonSearchbar showClearButton="focus"></IonSearchbar>
 
-        {userList.length ? (
+        {userList?.length ? (
           <IonList lines="full">
             {userList.map((user) => (
               <div key={user.id}>
@@ -77,7 +69,9 @@ export const UserListPage: React.FC = () => {
                       />
                     </IonAvatar>
 
-                    <IonLabel class="username-ellipsis">{user.name.toUpperCase()}</IonLabel>
+                    <IonLabel class="username-ellipsis">
+                      {user.name.toUpperCase()}
+                    </IonLabel>
 
                     {user.status === UserStatusEnum.ACTIVE && (
                       <IonBadge color="success" slot="end">

@@ -43,10 +43,14 @@ import { useAuth } from "../../contexts/useAuth";
 
 import { LoginWithPasswordPage } from "./LoginWithPassword";
 import { arrowBackOutline, arrowForwardOutline } from "ionicons/icons";
+
 import { LoginPage } from "./Login";
+
 import { useRegisterStepValidation } from "../../hooks/useRegisterStepValidation";
 
 import dayjs from "dayjs";
+
+import { AxiosError } from "axios";
 
 export const RegisterPage: React.FC = () => {
   const [isToastOpened, setIsToastOpened] = useState(false);
@@ -209,7 +213,6 @@ export const RegisterPage: React.FC = () => {
   };
 
   const { userCreated } = useAuth();
-  const history = useHistory();
 
   const createUserHandler = async () => {
     setIsLoading(true);
@@ -225,18 +228,25 @@ export const RegisterPage: React.FC = () => {
         gender,
       });
 
-      userCreated(data.access_token);
+      successToast("Conta criada com sucesso!");
 
-      history.push("/welcome");
-    } catch (err) {
+      setTimeout(() => {
+        userCreated(data.access_token);
+      }, 4000);
+    } catch (err: unknown) {
+      const error = err as AxiosError<{ message: string }>;
+
       setToastType("alert");
-      setToastMessage("Erro ao criar usuário.");
+      setToastMessage(error.response?.data?.message || "Erro desconhecido");
       setIsToastOpened(true);
-
-      console.error(err);
-    } finally {
       setIsLoading(false);
     }
+  };
+
+  const successToast = (message: string) => {
+    setToastType("success");
+    setToastMessage(message);
+    setIsToastOpened(true);
   };
 
   const setBirthDateHandler = (event: Event) => {

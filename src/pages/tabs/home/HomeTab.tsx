@@ -33,8 +33,13 @@ export const HomeTab = () => {
           (addr) => addr.inUse === true
         )[0];
 
+        if (!getInUseAddress) {
+          setAddress("");
+          return;
+        }
+
         setAddress(
-          `${getInUseAddress.street}, ${getInUseAddress.number} - ${getInUseAddress.city}`
+          `${getInUseAddress?.street}, ${getInUseAddress?.number} - ${getInUseAddress?.city}`
         );
       } catch (error) {
         console.error("Erro ao buscar o endereço:", error);
@@ -76,6 +81,7 @@ export const HomeTab = () => {
             ) : (
               <>
                 <IonIcon icon={earth} style={{ fontSize: "22px" }}></IonIcon>
+
                 <IonText>
                   <strong>Endereço não cadastrado</strong>
                 </IonText>
@@ -110,9 +116,7 @@ export const HomeTab = () => {
             </IonText>
           </IonRow>
 
-          <CategoryBox
-            categories={[]}
-          />
+          <CategoryBox categories={[]} />
 
           <NextYouList partners={[]} />
         </IonContent>

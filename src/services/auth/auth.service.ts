@@ -25,7 +25,7 @@ export const checkToken = async () => {
 };
 
 export const getUserList = async () => {
-  const response = await useAxios.get("/users");
+  const response = await useAxios.get("/admin/users");
 
   return response.data;
 };

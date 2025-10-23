@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   IonIcon,
   IonLabel,
@@ -6,6 +8,8 @@ import {
   IonTabButton,
   IonTabs,
 } from "@ionic/react";
+
+import { jwtDecode } from "jwt-decode";
 
 import { Tab2 } from "./Tab2";
 import { Tab3 } from "./Tab3";
@@ -19,8 +23,7 @@ import {
 
 import { HomeTab } from "./home/HomeTab";
 import { ProfileTab } from "./profile/ProfileTab";
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+
 import { UserStatusEnum } from "../../enums";
 import { AccessPendingPage } from "../welcome/AccessPendingPage";
 

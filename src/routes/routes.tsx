@@ -40,14 +40,6 @@ const WelcomePage = lazy(() =>
   }))
 );
 
-const AccessPendingPage = lazy(() =>
-  import("../pages/welcome/AccessPendingPage").then(
-    ({ AccessPendingPage }) => ({
-      default: AccessPendingPage,
-    })
-  )
-);
-
 const WelcomeCreateAddressPage = lazy(() =>
   import("../pages/welcome/WelcomeCreateAddressPage").then(
     ({ WelcomeCreateAddressPage }) => ({
@@ -78,6 +70,7 @@ const UserUpdateAddressPage = lazy(() =>
     })
   )
 );
+
 const UserListPage = lazy(() =>
   import("../pages/user/UserListPage").then(({ UserListPage }) => ({
     default: UserListPage,
@@ -90,6 +83,7 @@ const UserListPage = lazy(() =>
 
 export const AppRoutes: React.FC = () => {
   const { isLoading } = useAuth();
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -106,10 +100,6 @@ export const AppRoutes: React.FC = () => {
 
       <PrivateRoute path="/tabs" component={TabsPage} />
       <PrivateRoute path="/welcome" component={WelcomePage} />
-      <PrivateRoute
-        path="/welcome/access-pending"
-        component={AccessPendingPage}
-      />
       <PrivateRoute
         path="/welcome/address"
         component={WelcomeCreateAddressPage}

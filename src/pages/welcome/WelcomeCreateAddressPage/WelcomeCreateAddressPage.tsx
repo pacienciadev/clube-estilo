@@ -19,12 +19,13 @@ import {
 import "./WelcomeCreateAddressPage.css";
 
 import { locationOutline } from "ionicons/icons";
-import {
-  createUserAddress,
-  getUserAddresses,
-} from "../../../services/user/address.service";
+import { createUserAddress } from "../../../services/user/address.service";
 
-export const WelcomeCreateAddressPage: React.FC = () => {
+export const WelcomeCreateAddressPage = ({
+  firstAccess = false,
+}: {
+  firstAccess?: boolean;
+}) => {
   const [description, setDescription] = useState("");
   const [street, setStreet] = useState("");
   // const [neighborhood, setNeighborhood] = useState("");
@@ -34,22 +35,6 @@ export const WelcomeCreateAddressPage: React.FC = () => {
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        const addresses = await getUserAddresses();
-
-        if (addresses.length > 0) {
-          window.location.href = "/tabs/home";
-        }
-      } catch (error) {
-        console.error("Erro ao buscar o endereço:", error);
-      }
-    };
-
-    fetchAddress();
-  }, []);
 
   useEffect(() => {
     const fetchAddressByZipCode = async () => {
@@ -236,6 +221,27 @@ export const WelcomeCreateAddressPage: React.FC = () => {
               {isSaving ? "Salvando..." : "Salvar endereço"}
               <IonIcon slot="end" icon={locationOutline}></IonIcon>
             </IonButton>
+          </IonCol>
+
+          <IonCol size="12" sizeMd="12">
+            {firstAccess && (
+              <IonText>
+                <h6>
+                  <strong>Por que cadastrar um endereço agora?</strong>
+                </h6>
+                <p>
+                  O nosso sistema trabalha com os endereços cadastrados.
+                  <br />
+                  <br />
+                  Para continuar, precisamos que você cadastre um endereço
+                  válido.
+                  <br />
+                  <br />
+                  Assim, poderemos oferecer nossos serviços de forma eficiente e
+                  personalizada.
+                </p>
+              </IonText>
+            )}
           </IonCol>
         </IonRow>
       </IonContent>

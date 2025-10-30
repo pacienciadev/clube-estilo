@@ -22,8 +22,17 @@ import "./UserCreateAddressPage.css";
 
 import { locationOutline } from "ionicons/icons";
 import { createUserAddress } from "../../../services/user/address.service";
+import { ToastComponent } from "../../../components/Toast";
 
-export const UserCreateAddressPage: React.FC = () => {
+interface UserCreateAddressPageProps {
+  onBack: (param: boolean) => void;
+}
+
+export const UserCreateAddressPage: React.FC<UserCreateAddressPageProps> = ({ onBack }) => {
+  const [isToastOpened, setIsToastOpened] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"alert" | "success">("alert");
+
   const [description, setDescription] = useState("");
   const [street, setStreet] = useState("");
   // const [neighborhood, setNeighborhood] = useState("");
@@ -62,7 +71,7 @@ export const UserCreateAddressPage: React.FC = () => {
     setIsSaving(true);
 
     try {
-      const response = await createUserAddress({
+      await createUserAddress({
         description,
         street,
         number,
@@ -75,6 +84,22 @@ export const UserCreateAddressPage: React.FC = () => {
       });
 
       // Limpar os campos após salvar
+      resetAddressFields();
+
+      successToast("Endereço salvo com sucesso!");
+
+      onBack(true);
+    } catch (error) {
+      console.error(error);
+
+      setToastType("alert");
+      setToastMessage("Erro ao salvar o endereço. Tente novamente.");
+      setIsToastOpened(true);
+    } finally {
+      setIsSaving(false);
+    }
+
+    function resetAddressFields() {
       setDescription("");
       setStreet("");
       setNumber("");
@@ -82,26 +107,16 @@ export const UserCreateAddressPage: React.FC = () => {
       setCity("");
       setState("");
       setZipCode("");
-
-      alert("Endereço salvo com sucesso!");
-
-      console.log("Endereço salvo:", response);
-
-      window.location.href = "/user/address";
-    } catch (error) {
-      console.error("Erro ao salvar endereço:", error);
-    } finally {
-      setIsSaving(false);
     }
   };
 
-  const enableSaveButton = !(
-    street &&
-    number &&
-    city &&
-    state &&
-    zipCode
-  );
+  const successToast = (message: string) => {
+    setToastType("success");
+    setToastMessage(message);
+    setIsToastOpened(true);
+  };
+
+  const enableSaveButton = !(street && number && city && state && zipCode);
 
   return (
     <IonPage
@@ -234,6 +249,13 @@ export const UserCreateAddressPage: React.FC = () => {
           </IonCol>
         </IonRow>
       </IonContent>
+
+      <ToastComponent
+        isOpen={isToastOpened}
+        onClose={setIsToastOpened}
+        message={toastMessage}
+        type={toastType}
+      />
     </IonPage>
   );
 };

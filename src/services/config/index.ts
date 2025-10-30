@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuth } from "../../contexts/useAuth";
 
 const baseURL = import.meta.env.VITE_API_URL;
 
@@ -33,13 +32,13 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 401) {
-      localStorage.removeItem("@ACCESS_TOKEN");
-      sessionStorage.removeItem("@ACCESS_TOKEN");
-      
+      localStorage.clear();
+      sessionStorage.clear();
+
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export { axiosInstance as useAxios };

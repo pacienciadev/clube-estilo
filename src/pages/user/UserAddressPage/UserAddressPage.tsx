@@ -30,14 +30,15 @@ import {
 } from "ionicons/icons";
 
 import {
-  getUserAddresses,
   setDefaultAddress,
 } from "../../../services/user/address.service";
 import { AddressTypes } from "../../../types";
 
-export const UserAddressPage: React.FC = () => {
-  const [addressList, setAddressList] = useState<AddressTypes[]>([]);
+interface UserAddressPageProps {
+  addresses: AddressTypes[];
+}
 
+export const UserAddressPage: React.FC<UserAddressPageProps> = ({ addresses }) => {
   const setDefaultAddressHandler = async (id: string) => {
     try {
       await setDefaultAddress(id);
@@ -47,20 +48,6 @@ export const UserAddressPage: React.FC = () => {
       console.error("Erro ao definir endereço como padrão:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        const addresses = await getUserAddresses();
-
-        setAddressList(addresses);
-      } catch (error) {
-        console.error("Erro ao buscar o endereço:", error);
-      }
-    };
-
-    fetchAddress();
-  }, []);
 
   return (
     <IonPage
@@ -81,7 +68,7 @@ export const UserAddressPage: React.FC = () => {
       </IonHeader>
 
       <IonContent className="ion-padding">
-        {!addressList.length ? (
+        {!addresses.length ? (
           <div className="empty-address">
             <IonText
               class="ion-text-center"
@@ -100,7 +87,7 @@ export const UserAddressPage: React.FC = () => {
           </div>
         ) : (
           <IonAccordionGroup expand="inset">
-            {addressList.map((address, index) => (
+            {addresses.map((address, index) => (
               <IonAccordion key={address.id} value={address.id}>
                 <IonItem slot="header" color="light">
                   <IonLabel>

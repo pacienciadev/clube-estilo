@@ -31,4 +31,5 @@ declare module "ionicons/icons" {
   export const peopleCircleOutline: string;
   export const caretForwardOutline: string;
   export const arrowBackOutline: string;
+  export const closeOutline: string;
 }

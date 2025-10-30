@@ -4,6 +4,7 @@ import {
   IonButton,
   IonContent,
   IonIcon,
+  IonNavLink,
   IonPage,
   IonRow,
   IonText,
@@ -22,32 +23,34 @@ import { useAuth } from "../../../contexts/useAuth";
 
 import { getUserAddresses } from "../../../services/user/address.service";
 
+import { AddressTypes } from "../../../types";
+import { UserAddressPage } from "../../user/UserAddressPage";
+
 export const HomeTab = () => {
-  const [address, setAddress] = useState<string>("");
+  const [addresses, setAddresses] = useState<AddressTypes[]>([]);
+  const [homeAddress, setHomeAddress] = useState<string>("");
 
   useEffect(() => {
-    const fetchAddress = async () => {
-      try {
-        const addresses = await getUserAddresses();
-        const getInUseAddress = addresses.filter(
-          (addr) => addr.inUse === true
-        )[0];
-
-        if (!getInUseAddress) {
-          setAddress("");
-          return;
-        }
-
-        setAddress(
-          `${getInUseAddress?.street}, ${getInUseAddress?.number} - ${getInUseAddress?.city}`
-        );
-      } catch (error) {
-        console.error("Erro ao buscar o endereço:", error);
-      }
-    };
-
     fetchAddress();
   }, []);
+
+  const fetchAddress = async () => {
+    try {
+      const addresses = await getUserAddresses();
+
+      setAddresses(addresses);
+
+      const getInUseAddress = addresses.filter(
+        (addr) => addr.inUse === true
+      )[0];
+
+      setHomeAddress(
+        `${getInUseAddress?.street}, ${getInUseAddress?.number} - ${getInUseAddress?.city}`
+      );
+    } catch (error) {
+      console.error("Erro ao buscar o endereço:", error);
+    }
+  };
 
   const { user } = useAuth();
 
@@ -63,20 +66,17 @@ export const HomeTab = () => {
             className="ion-align-items-center ion-justify-content-center ion-padding address-text"
             style={{ gap: "10px", backgroundColor: "#2C3E50" }}
           >
-            {address ? (
+            {homeAddress ? (
               <>
                 <IonIcon icon={earth} style={{ fontSize: "20px" }}></IonIcon>
 
-                <IonText class="address-limit">{address}</IonText>
+                <IonText class="address-limit">{homeAddress}</IonText>
 
-                <IonButton
-                  shape="round"
-                  size="small"
-                  color="primary"
-                  href="/user/address"
-                >
-                  <IonIcon icon={location} slot="icon-only"></IonIcon>
-                </IonButton>
+                <IonNavLink component={() => <UserAddressPage addresses={addresses} />}>
+                  <IonButton shape="round" size="small" color="primary">
+                    <IonIcon icon={location} slot="icon-only"></IonIcon>
+                  </IonButton>
+                </IonNavLink>
               </>
             ) : (
               <>

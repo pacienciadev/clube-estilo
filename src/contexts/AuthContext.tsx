@@ -3,6 +3,8 @@ import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import { AuthContextType } from "./types";
+import { getUserAddresses } from "../services/user/address.service";
+import { AddressTypes } from "../types";
 
 // Crie o contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,23 +14,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [user, setUser] = useState<AuthContextType["user"]>();
+  const [addresses, setAddresses] = useState<AddressTypes[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
 
-    const token =
+    const storagedToken =
       localStorage.getItem("@ACCESS_TOKEN") ||
       sessionStorage.getItem("@ACCESS_TOKEN");
 
-    if (token) {
-      setUser(jwtDecode(token));
+    if (storagedToken) {
+      setUser(jwtDecode(storagedToken));
       setIsAuthenticated(true);
     }
 
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+    
+    fetchAddress();
+  }, [isAuthenticated]);
+
+  const fetchAddress = async () => {
+    try {
+      const addresses = await getUserAddresses();
+
+      setAddresses(addresses);
+    } catch (error) {
+      console.error("Erro ao buscar o endereço:", error);
+    }
+  };
 
   const userCreated = (jwt: string) => {
     sessionStorage.setItem("@ACCESS_TOKEN", jwt);
@@ -38,9 +57,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const logout = () => {
-    // Remove o token do localStorage
-    localStorage.removeItem("@ACCESS_TOKEN");
-    sessionStorage.removeItem("@ACCESS_TOKEN");
+    localStorage.clear();
+    sessionStorage.clear();
 
     setIsAuthenticated(false);
   };
@@ -51,6 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading,
     user,
     setUser,
+    addresses,
     userCreated,
     logout,
   };

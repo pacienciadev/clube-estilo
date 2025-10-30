@@ -14,7 +14,6 @@ export function ToastComponent({
   onClose: (arg: boolean) => void;
 }) {
   return (
-    <>
       <IonToast
         isOpen={isOpen}
         onDidDismiss={() => onClose(false)}
@@ -22,9 +21,8 @@ export function ToastComponent({
         message={message}
         className={`custom-toast ${type}`}
         swipeGesture="vertical"
-        position="top"
+        position="bottom"
         positionAnchor="header"
       ></IonToast>
-    </>
   );
 };

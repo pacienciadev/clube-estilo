@@ -7,12 +7,13 @@ import { useAuth } from "../../contexts/useAuth";
 import { PrivateRouteProps } from "./types";
 import { IonNav } from "@ionic/react";
 import { AccessPendingPage } from "../../pages/welcome/AccessPendingPage";
+import { WelcomeCreateAddressPage } from "../../pages/welcome/WelcomeCreateAddressPage";
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, addresses } = useAuth();
   
   if (!isAuthenticated) {
     return <Redirect to="/login" />;
@@ -20,6 +21,10 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
 
   if (isAuthenticated && user?.status === "PENDING") {
     return <AccessPendingPage />;
+  }
+
+  if (isAuthenticated && addresses.length === 0) {
+    return <WelcomeCreateAddressPage firstAccess />;
   }
 
   return (
